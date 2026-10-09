@@ -1,0 +1,55 @@
+---
+title: "Human approval"
+description: "Human decisions that gate actions or steps."
+banner:
+  content: "Draft - v1alpha1. Fields and semantics may change before v1beta1."
+---
+
+```yaml
+approval:
+  requiredFor:
+    - production.deploy
+    - git.merge
+    - external.communication
+  approvers:
+    - role: security-reviewer
+  timeout: 24h
+```
+
+
+## Approval flow
+
+<figure class="awp-diagram">
+<svg viewBox="0 0 420 470" role="img" aria-labelledby="hitl-t hitl-d">
+  <title id="hitl-t">Human approval gate</title>
+  <desc id="hitl-d">Flow from Agent to Analyze, Implement and Test, then a Human Approval gate with the checks Security Review and Policy Check, then Deploy.</desc>
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="head" d="M0 0L10 5L0 10z" /></marker></defs>
+  <rect class="box" x="130" y="8" width="160" height="38" rx="6" /><text x="210" y="32" text-anchor="middle">Agent</text>
+  <path class="arrow" d="M210 46V70" marker-end="url(#ah)" />
+  <rect class="box" x="130" y="72" width="160" height="38" rx="6" /><text x="210" y="96" text-anchor="middle">Analyze</text>
+  <path class="arrow" d="M210 110V134" marker-end="url(#ah)" />
+  <rect class="box" x="130" y="136" width="160" height="38" rx="6" /><text x="210" y="160" text-anchor="middle">Implement</text>
+  <path class="arrow" d="M210 174V198" marker-end="url(#ah)" />
+  <rect class="box" x="130" y="200" width="160" height="38" rx="6" /><text x="210" y="224" text-anchor="middle">Test</text>
+  <path class="arrow" d="M210 238V262" marker-end="url(#ah)" />
+  <rect class="box gate" x="70" y="264" width="280" height="110" rx="8" />
+  <text x="210" y="292" text-anchor="middle" font-weight="700">Human Approval</text>
+  <text x="110" y="327">✓ Security Review</text>
+  <text x="110" y="352">✓ Policy Check</text>
+  <path class="arrow" d="M210 374V400" marker-end="url(#ah)" />
+  <rect class="box" x="130" y="402" width="160" height="38" rx="6" /><text x="210" y="426" text-anchor="middle">Deploy</text>
+</svg>
+<figcaption>The runtime pauses before the action and does not continue until the required approvals are granted by authenticated humans. Agents cannot approve.</figcaption>
+</figure>
+
+- The runtime pauses before the action, emits `approval.requested` and does not execute until `minApprovals` approvals are granted.
+- An approval applies to exactly one action request and cannot be reused.
+- Agents cannot grant approvals; an authenticated human must.
+- Approval requests show workflow, step, action, redacted arguments, data classification and the decision record.
+
+
+Normative text: [Human approval](/specification/v1alpha1/#76-human-approval).
+
+:::note[Compliance]
+AWP provides machine-readable governance primitives that can help organizations implement and enforce their own compliance requirements. Compliance depends on the implementation, organizational controls and applicable regulatory requirements.
+:::

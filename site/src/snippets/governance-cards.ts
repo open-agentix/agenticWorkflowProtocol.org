@@ -1,4 +1,4 @@
-// Short snippets for the homepage governance grid. Each is an excerpt of a valid v1alpha1 manifest;
+// Short snippets for the governance overview page. Each is an excerpt of a valid v1alpha1 manifest;
 // the normative text is linked from every card.
 export const cards = [
   {
