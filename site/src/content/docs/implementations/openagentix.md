@@ -26,6 +26,8 @@ A field-by-field mapping between `agents.md` and AWP `v1alpha1`, a converter des
 - Conditional steps (`when`), tool argument constraints, prefix wildcards and typed handovers have no AWP `v1alpha1` equivalent. An export that drops them would run with fewer restrictions on another runtime, so the proposed converter refuses to produce one by default.
 - Many AWP features (typed inputs, step graphs, command and approval steps, data and model policies, environments, risk levels, `Policy` manifests, the audit event model, signatures, remote A2A agents) have no `agents.md` equivalent.
 
+A second version of the mapping, written for the OpenAgentix plan to use AWP manifests natively, is in [docs/alignment/](https://github.com/open-agentix/agenticWorkflowProtocol.org/tree/main/docs/alignment): a verified alignment matrix with a prototype converter evaluation (none of the four OpenAgentix examples converts without losing security-relevant restrictions today), a proposed `x-openagentix-*` extension namespace and a phased plan. The related AWP Enhancement Proposals in `aep/` are drafts and not accepted. None of this changes the status above.
+
 :::note[Compliance]
 AWP provides machine-readable governance primitives that can help organizations implement and enforce their own compliance requirements. Compliance depends on the implementation, organizational controls and applicable regulatory requirements.
 :::

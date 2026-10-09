@@ -6,6 +6,7 @@
 | **AWP version** | `awp.agenticworkflowprotocol.org/v1alpha1` ([specification](../spec/v1alpha1/README.md), [JSON Schema](../schema/awp.v1alpha1.json), [conformance suite](../conformance/README.md)) |
 | **OpenAgentix syntax** | `agents.md`, `apiVersion: openagentix.io/v1alpha1` ([open-agentix/open-agentix](https://github.com/open-agentix/open-agentix): `docs/agents-md.md`, `packages/core/src/agents/schema.ts`, `packages/core/src/agents/validate.ts`) |
 | **Source revision read** | open-agentix `main` at commit `57775e2` (2026-10-09) |
+| **Newer version** | [docs/alignment/openagentix-matrix.md](alignment/openagentix-matrix.md) (v2: strategy A, verified behaviour, converter evaluation). Where the two differ, v2 applies; notably the approval timeout maps to `onTimeout: fail`, not `reject`. |
 
 > **Conformance status.** OpenAgentix is **not** conformant to AWP `v1alpha1`. It does not
 > implement any AWP conformance profile today (not `core`, `governance`, `audit`, `security`,
