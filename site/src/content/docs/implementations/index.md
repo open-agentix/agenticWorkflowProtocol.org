@@ -9,7 +9,7 @@ AWP is a specification, not a platform. OpenAgentix is one implementation.
 
 | Implementation | Status |
 | -------------- | ------ |
-| [OpenAgentix](https://github.com/open-agentix/open-agentix) | Reference implementation, **in progress**. Not yet conformant to any profile. |
+| [OpenAgentix](https://github.com/open-agentix/open-agentix) | Reference implementation, **in progress**. Not yet conformant to any profile. [Status and mapping](/implementations/openagentix/). |
 
 No other implementation is listed. This list changes only when a project states its support publicly.
 
