@@ -29,6 +29,7 @@ API versions (`v1alpha1`, ...) are versioned separately, see [GOVERNANCE.md](GOV
 - Command-line output formats for `awp validate`, `awp lint`, `awp simulate`, `awp plan`, `awp run`
   and `awp audit`, including diagnostics, exit codes and the plan output (`docs/cli.md`).
 - Mapping of the OpenAgentix `agents.md` syntax to AWP `v1alpha1` (`docs/mapping-agents-md.md`): field-by-field table, converter design, round-trip expectations and the work needed per conformance profile, plus a website page on the OpenAgentix implementation status (not conformant).
+- Draft proposal for AWP Enhancement Proposals (`docs/aep-process.md`, not adopted): AEP lifecycle, numbering, template (`aep/0000-template.md`), versioning rules for API versions and repository releases, and rules for a future conformance mark (self-certification, test suite, revocation). No mark or certification exists.
 
 ### Changed
 

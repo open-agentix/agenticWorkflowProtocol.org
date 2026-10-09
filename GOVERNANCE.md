@@ -46,7 +46,8 @@ that no single organization holds a majority of maintainers once the specificati
   at least 5 working days of public discussion, then lazy consensus of the maintainers.
 - Larger changes will use **AWP Enhancement Proposals (AEPs)**: a numbered Markdown document in
   `aep/` with motivation, specification text, alternatives, compatibility and conformance impact.
-  The AEP process is itself still a draft and will be defined in a dedicated pull request.
+  The AEP process is itself still a draft; a proposal is in [docs/aep-process.md](docs/aep-process.md)
+  with the template [aep/0000-template.md](aep/0000-template.md). It is not adopted yet.
 - If consensus cannot be reached, the maintainers decide by simple majority; the project lead
   breaks ties.
 
