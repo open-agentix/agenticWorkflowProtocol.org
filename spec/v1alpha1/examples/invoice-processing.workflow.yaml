@@ -1,0 +1,234 @@
+# Example: a governance-heavy workflow that processes supplier invoices.
+# Profiles exercised: core, governance, audit, security, mcp.
+apiVersion: awp.agenticworkflowprotocol.org/v1alpha1
+kind: Workflow
+
+metadata:
+  name: invoice-processing
+  version: 1.2.0
+  description: Extract invoice data, check it against purchase orders and prepare payments.
+  owner:
+    team: finance-ai
+    contact: finance-ai@example.com
+    businessOwner: accounts-payable@example.com
+    technicalOwner: platform-team@example.com
+    dataOwner: finance-data@example.com
+  classification: confidential
+  purpose: Prepare supplier payments for human release.
+  risk:
+    level: high
+    category:
+      - financial
+  labels:
+    department: finance
+  integrity:
+    digest: sha256:9b2f6c1e4d8a0b7c3e5f1a2d4c6b8e0f1a3c5e7b9d0f2a4c6e8b0d1f3a5c7e9b
+  signature:
+    format: sigstore-bundle
+    ref: https://registry.example.com/awp/invoice-processing/1.2.0.sigstore.json
+    identity: release-pipeline@example.com
+  provenance:
+    format: slsa-provenance-v1
+    ref: https://registry.example.com/awp/invoice-processing/1.2.0.intoto.jsonl
+
+spec:
+
+  triggers:
+    - type: event
+      source: mailbox.invoices
+      eventType: message.received
+    - type: schedule
+      cron: "0 6 * * 1-5"
+      timezone: Europe/Berlin
+
+  inputs:
+    - name: invoice
+      type: artifact
+      required: true
+      classification: personal
+
+  environment:
+    name: production
+
+  environments:
+    development:
+      autonomy: unrestricted
+    staging:
+      autonomy: controlled
+    production:
+      autonomy: approval-required
+      autoApprove:
+        - erp.read
+
+  budget:
+    maxCostUsd: 5.00
+    maxSteps: 50
+    maxDuration: 30m
+    resources:
+      maxTokens: 100000
+      maxToolCalls: 100
+      maxRetries: 3
+      maxConcurrency: 2
+
+  secrets:
+    - name: ERP_API_TOKEN
+      source: secret-manager
+      scope:
+        - erp
+
+  mcpServers:
+    - name: erp
+      transport: stdio
+      image: registry.example.com/mcp/erp@sha256:0c1d2e3f405162738495a6b7c8d9e0f1a2b3c4d5e6f708192a3b4c5d6e7f8091
+      version: 2.4.1
+      auth:
+        secretRef: ERP_API_TOKEN
+
+  actionGroups:
+    erp.read:
+      - erp.get_purchase_order
+      - erp.get_supplier
+    erp.write:
+      - erp.create_payment_draft
+
+  agents:
+
+    - id: extractor
+      ref:
+        name: invoice-extractor
+        version: 2.0.1
+        digest: sha256:4e5f6a7b8c9d0e1f2a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f8091
+
+    - id: checker
+      model:
+        provider: azure-openai
+        name: gpt-5
+        version: "2026-08"
+        region: EU
+        approval:
+          status: approved
+          expires: "2027-01-01"
+        riskClassification: medium
+        evaluation:
+          status: passed
+          ref: https://evals.example.com/reports/gpt-5-invoice-check
+        allowedUseCases:
+          - document-extraction
+          - reconciliation
+      promptRef:
+        name: invoice-check
+        version: 3.1.0
+        digest: sha256:7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b
+      tools:
+        - type: mcp
+          server: erp
+
+  workflow:
+
+    - id: extract
+      agent: extractor
+      task: "Extract supplier, amounts and line items from ${{ inputs.invoice }}."
+      outputs:
+        - name: invoiceData
+          classification: personal
+
+    - id: reconcile
+      agent: checker
+      task: "Check ${{ steps.extract.outputs.invoiceData }} against the purchase order."
+      dependsOn:
+        - extract
+      outputs:
+        - name: paymentDraft
+          classification: confidential
+
+    - id: release
+      type: approval
+      approval:
+        approvers:
+          - role: accounts-payable-approver
+        minApprovals: 2
+        timeout: 24h
+      dependsOn:
+        - reconcile
+
+  dataPolicy:
+    classification: confidential
+    inputs:
+      - name: invoice
+        classification: personal
+    outputs:
+      - name: paymentDraft
+        classification: confidential
+    restrictions:
+      externalTransfer: deny
+    residency:
+      allowed:
+        - EU
+    processing:
+      allowedProviders:
+        - ollama
+        - azure-openai
+      forbiddenProviders:
+        - public-cloud-us
+
+  modelPolicy:
+    allowedProviders:
+      - azure-openai
+      - ollama
+    allowedModels:
+      - gpt-5
+      - qwen3
+    forbiddenModels:
+      - unapproved-model
+    requirements:
+      approvalStatus: approved
+      encryption: true
+      region: EU
+
+  permissions:
+    default: deny
+    tools:
+      erp.read:
+        allow: true
+      erp.write:
+        allow: true
+      shell.execute:
+        allow: false
+    network:
+      egress: deny
+    filesystem:
+      read:
+        - /workspace
+      write:
+        - /workspace/out
+    secrets:
+      - ERP_API_TOKEN
+
+  approval:
+    requiredFor:
+      - erp.create_payment_draft
+      - external.communication
+    approvers:
+      - role: finance-reviewer
+    timeout: 24h
+    onTimeout: reject
+    separationOfDuties:
+      enabled: true
+      rules:
+        - actorCannotApproveOwnAction: true
+        - initiatorCannotApprove: true
+
+  policies:
+    include:
+      - name: eu-data-residency
+        version: 1.0.0
+      - name: no-production-autonomy
+        version: 1.0.0
+
+  audit:
+    enabled: true
+    payload: metadata
+    integrity:
+      mode: hash-chain
+    retention:
+      duration: 7y

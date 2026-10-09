@@ -1,0 +1,38 @@
+# Example: a reusable agent definition referenced by invoice-processing.workflow.yaml.
+apiVersion: awp.agenticworkflowprotocol.org/v1alpha1
+kind: Agent
+
+metadata:
+  name: invoice-extractor
+  version: 2.0.1
+  description: Extracts structured data from invoice documents.
+  owner:
+    team: finance-ai
+    contact: finance-ai@example.com
+  classification: confidential
+  risk:
+    level: medium
+    category:
+      - financial
+
+spec:
+  model:
+    provider: ollama
+    name: qwen3
+    version: "3.0"
+    region: EU
+    approval:
+      status: approved
+      expires: "2027-03-31"
+  instructions: |
+    Extract supplier name, invoice number, dates, currency, totals and line items.
+    Return JSON only. Never guess missing values; mark them as null.
+  tools: []
+  budget:
+    maxSteps: 10
+    resources:
+      maxTokens: 30000
+  permissions:
+    default: deny
+    network:
+      egress: deny

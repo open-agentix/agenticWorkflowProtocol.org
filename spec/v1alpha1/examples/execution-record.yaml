@@ -1,0 +1,53 @@
+# Example: reproducibility record for one execution of vulnerability-fixer@0.1.0.
+executionId: awp-exec-01JABC7Q4M2W9X0Y1Z2A3B4C5D
+startedAt: "2026-10-05T13:42:11Z"
+finishedAt: "2026-10-05T13:55:12Z"
+status: succeeded
+environment: development
+runtime:
+  name: example-runtime
+  version: 0.4.0
+  conformance:
+    awp: v1alpha1
+    profiles:
+      - core
+      - governance
+      - audit
+workflow:
+  name: vulnerability-fixer
+  version: 0.1.0
+  digest: sha256:5c4b3a29180716f5e4d3c2b1a0f9e8d7c6b5a49382716f5e4d3c2b1a0f9e8d7c
+agents:
+  - id: researcher
+    model:
+      provider: anthropic
+      name: claude
+      version: claude-example-2026-06
+    instructionsDigest: sha256:aa11bb22cc33dd44ee55ff6600112233445566778899aabbccddeeff00112233
+  - id: fixer
+    model:
+      provider: ollama
+      name: qwen3
+      version: "3.0"
+    instructionsDigest: sha256:bb22cc33dd44ee55ff6600112233445566778899aabbccddeeff0011223344aa
+tools:
+  - server: github
+    version: 1.8.0
+    url: https://mcp.example.com/github
+images:
+  - ref: registry.example.com/build/node@sha256:3f1d5c0a9e2b7c4d6e8f0a1b2c3d4e5f60718293a4b5c6d7e8f90a1b2c3d4e5f
+policies:
+  - source: inline
+    digest: sha256:cc33dd44ee55ff6600112233445566778899aabbccddeeff00112233445566bb
+inputs:
+  - name: repository
+    digest: sha256:dd44ee55ff6600112233445566778899aabbccddeeff00112233445566bbcc11
+  - name: cve
+    digest: sha256:ee55ff6600112233445566778899aabbccddeeff00112233445566bbcc11dd22
+artifacts:
+  - name: report
+    stepId: investigate
+    digest: sha256:ff6600112233445566778899aabbccddeeff00112233445566bbcc11dd22ee33
+  - name: pull-request
+    stepId: fix
+    uri: https://git.example.com/example-org/web-shop/pull/42

@@ -1,0 +1,70 @@
+# Example: delegating a review to a remote agent over A2A.
+# Profiles exercised: core, governance, audit, a2a.
+apiVersion: awp.agenticworkflowprotocol.org/v1alpha1
+kind: Workflow
+
+metadata:
+  name: security-review
+  version: 0.3.0
+  owner:
+    team: appsec
+    contact: appsec@example.com
+  classification: internal
+  risk:
+    level: low
+
+spec:
+  triggers:
+    - type: event
+      source: git.example.com
+      eventType: pull_request.opened
+
+  inputs:
+    - name: pullRequestUrl
+      type: string
+      required: true
+
+  budget:
+    maxCostUsd: 1.00
+    maxSteps: 20
+    maxDuration: 10m
+
+  secrets:
+    - name: REVIEW_AGENT_TOKEN
+      source: secret-manager
+      scope:
+        - security-agent
+
+  agents:
+    - id: security-agent
+      protocol: a2a
+      endpoint: https://agents.example.com/a2a/security-review
+      agentCard:
+        url: https://agents.example.com/.well-known/agent-card.json
+        digest: sha256:1f2e3d4c5b6a79880716253443526170f1e2d3c4b5a6978877665544332211ff
+      auth:
+        secretRef: REVIEW_AGENT_TOKEN
+
+  workflow:
+    - id: review
+      agent: security-agent
+      task: "Review ${{ inputs.pullRequestUrl }} for security issues and report findings."
+      outputs:
+        - name: findings
+          classification: internal
+
+  permissions:
+    default: deny
+    tools:
+      a2a.security-agent.send:
+        allow: true
+
+  dataPolicy:
+    restrictions:
+      externalTransfer: allow
+    processing:
+      allowedProviders:
+        - agents.example.com
+
+  audit:
+    enabled: true
