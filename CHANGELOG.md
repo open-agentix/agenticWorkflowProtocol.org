@@ -10,6 +10,8 @@ API versions (`v1alpha1`, ...) are versioned separately, see [GOVERNANCE.md](GOV
 
 ### Added
 
+- Website (`site/`): Astro Starlight site with homepage, concept, governance, security, integration, example and implementation pages, the specification rendered from `spec/`, offline Pagefind search, dark/light themes, link check, size budget and accessibility check, and a GitHub Pages workflow (`.github/workflows/pages.yml`).
+
 - Repository scaffold: README, licenses (CC BY 4.0 for specification text, Apache-2.0 for code),
   Code of Conduct, contributing guide with DCO, governance, security policy, issue and pull request
   templates, `CNAME` for `agenticworkflowprotocol.org`.
