@@ -1,0 +1,35 @@
+name: Implementation listing
+description: Ask to list an implementation of AWP
+labels: [implementation]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Name and URL of the implementation
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Implemented API version
+      description: 'For example v1alpha1'
+    validations:
+      required: true
+  - type: checkboxes
+    id: profiles
+    attributes:
+      label: Conformance profiles implemented
+      options:
+        - label: core
+        - label: governance
+        - label: audit
+        - label: security
+        - label: mcp
+        - label: a2a
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Link to a public statement, documentation or test results. Implementations are listed as "in progress" until evidence exists.
+    validations:
+      required: true

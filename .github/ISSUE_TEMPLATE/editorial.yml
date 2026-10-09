@@ -1,0 +1,21 @@
+name: Editorial issue
+description: Typo, unclear wording, broken link or invalid example
+labels: [editorial]
+body:
+  - type: input
+    id: location
+    attributes:
+      label: Location
+      description: 'File, section or URL'
+    validations:
+      required: true
+  - type: textarea
+    id: issue
+    attributes:
+      label: What is wrong?
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: Suggested fix
