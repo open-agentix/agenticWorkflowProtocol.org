@@ -1,0 +1,120 @@
+# Example: an excerpt of the audit event stream of one execution of
+# vulnerability-fixer@0.1.0 (YAML for readability; implementations typically emit JSON lines).
+---
+id: 01JABC0000000000000000000A
+type: workflow.started
+time: "2026-10-05T13:42:11Z"
+executionId: awp-exec-01JABC7Q4M2W9X0Y1Z2A3B4C5D
+workflow:
+  name: vulnerability-fixer
+  version: 0.1.0
+  digest: sha256:5c4b3a29180716f5e4d3c2b1a0f9e8d7c6b5a49382716f5e4d3c2b1a0f9e8d7c
+actor:
+  type: human
+  id: user:alice@example.com
+environment: development
+data:
+  trigger:
+    type: manual
+  inputs:
+    repository: example-org/web-shop
+    cve: CVE-2026-12345
+---
+id: 01JABC0000000000000000000B
+type: tool.requested
+time: "2026-10-05T13:42:30Z"
+executionId: awp-exec-01JABC7Q4M2W9X0Y1Z2A3B4C5D
+stepId: investigate
+actor:
+  type: agent
+  id: researcher
+data:
+  action: github.search_code
+  server: github
+  arguments:
+    query: "lodash.template repo:example-org/web-shop"
+---
+id: 01JABC0000000000000000000C
+type: policy.evaluated
+time: "2026-10-05T13:42:30Z"
+executionId: awp-exec-01JABC7Q4M2W9X0Y1Z2A3B4C5D
+stepId: investigate
+actor:
+  type: runtime
+  id: example-runtime
+data:
+  action: github.search_code
+  decision: allow
+  evaluated:
+    - source: permissions
+      result: allow
+    - source: policies.git
+      result: notApplicable
+---
+id: 01JABC0000000000000000000D
+type: tool.executed
+time: "2026-10-05T13:42:31Z"
+executionId: awp-exec-01JABC7Q4M2W9X0Y1Z2A3B4C5D
+stepId: investigate
+actor:
+  type: agent
+  id: researcher
+data:
+  action: github.search_code
+  outcome: success
+  durationMs: 812
+---
+id: 01JABC0000000000000000000E
+type: tool.denied
+time: "2026-10-05T13:47:02Z"
+executionId: awp-exec-01JABC7Q4M2W9X0Y1Z2A3B4C5D
+stepId: fix
+actor:
+  type: agent
+  id: fixer
+data:
+  action: github.merge_pull_request
+  reason: policy
+  policy: policies.merge.allow
+---
+id: 01JABC0000000000000000000F
+type: tool.requested
+time: "2026-10-05T13:49:40Z"
+executionId: awp-exec-01JABC7Q4M2W9X0Y1Z2A3B4C5D
+stepId: fix
+actor:
+  type: agent
+  id: fixer
+data:
+  action: github.create_pull_request
+  server: github
+  decision:
+    action: create_pull_request
+    reason:
+      type: policy-compatible-action
+      summary: Fix applied and tests requested; pull request creation is allowed.
+    evidence:
+      - type: artifact
+        ref: report
+      - type: step
+        ref: investigate
+    policyChecks:
+      - permissions
+      - policies.pullRequest
+---
+id: 01JABC0000000000000000000G
+type: workflow.completed
+time: "2026-10-05T13:55:12Z"
+executionId: awp-exec-01JABC7Q4M2W9X0Y1Z2A3B4C5D
+actor:
+  type: runtime
+  id: example-runtime
+data:
+  status: succeeded
+  usage:
+    steps: 21
+    costUsd: 0.84
+    costKnown: true
+    tokens: 183220
+    toolCalls: 37
+    durationMs: 781000

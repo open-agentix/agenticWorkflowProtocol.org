@@ -1,0 +1,24 @@
+# Example: a reusable policy that keeps personal data inside the EU.
+apiVersion: awp.agenticworkflowprotocol.org/v1alpha1
+kind: Policy
+
+metadata:
+  name: eu-data-residency
+  version: 1.0.0
+  owner:
+    team: data-protection
+    contact: data-protection@example.com
+
+spec:
+  rules:
+    - id: personal-data-stays-in-eu
+      when:
+        data.classification:
+          in:
+            - personal
+            - sensitive
+        destination.region:
+          notIn:
+            - EU
+      effect: deny
+      message: Personal and sensitive data must not leave the EU.
