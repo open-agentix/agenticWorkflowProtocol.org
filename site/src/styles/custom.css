@@ -1,0 +1,277 @@
+/* Theme tokens. All fonts are system fonts: the site makes no external requests. */
+:root {
+  --sl-font-system-mono: ui-monospace, 'SFMono-Regular', 'Cascadia Mono', 'DejaVu Sans Mono', Menlo, Consolas, monospace;
+  --awp-code-bg: #f4f6f9;
+  --awp-line: #c9d1dc;
+  --awp-ok: #0f6b3a;
+}
+:root[data-theme='light'] {
+  --sl-color-accent-low: #dbe9fb;
+  --sl-color-accent: #0a58ad;
+  --sl-color-accent-high: #063e7a;
+  --sl-color-text-accent: #0a58ad;
+}
+:root[data-theme='dark'] {
+  --sl-color-accent-low: #0b2a4a;
+  --sl-color-accent: #3d86d8;
+  --sl-color-accent-high: #a9cdf5;
+  --sl-color-text-accent: #8fbcf0;
+  --awp-code-bg: #11161d;
+  --awp-line: #3a4452;
+  --awp-ok: #6fd39b;
+}
+
+/* Visible focus for everything keyboard-reachable (WCAG 2.4.7 / 2.4.11). */
+:focus-visible {
+  outline: 3px solid var(--sl-color-accent-high);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ---- Homepage (splash template) ---- */
+.awp-home {
+  --awp-gap: clamp(2.5rem, 6vw, 4.5rem);
+  max-width: 72rem;
+  margin-inline: auto;
+}
+.awp-home section {
+  padding-block: var(--awp-gap);
+  border-top: 1px solid var(--sl-color-hairline);
+}
+.awp-home section:first-child {
+  border-top: 0;
+}
+.awp-home h2 {
+  font-size: clamp(1.5rem, 3.2vw, 2.1rem);
+  line-height: 1.2;
+  margin: 0 0 0.75rem;
+  max-width: 44rem;
+  text-wrap: balance;
+}
+.awp-home p {
+  max-width: 44rem;
+}
+.awp-home .lede {
+  color: var(--sl-color-gray-2);
+  font-size: var(--sl-text-lg);
+}
+.eyebrow {
+  font-family: var(--sl-font-system-mono);
+  font-size: var(--sl-text-sm);
+  color: var(--sl-color-text-accent);
+  margin: 0 0 0.75rem;
+}
+.hero-grid {
+  display: grid;
+  gap: 2rem;
+  align-items: start;
+}
+@media (min-width: 62rem) {
+  .hero-grid {
+    grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  }
+}
+.awp-home h1 {
+  font-size: clamp(2.4rem, 7vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  margin: 0 0 1rem;
+}
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+}
+.btn {
+  display: inline-block;
+  padding: 0.6rem 1.1rem;
+  border-radius: 0.4rem;
+  border: 2px solid var(--sl-color-accent);
+  font-weight: 600;
+  text-decoration: none;
+  color: var(--sl-color-text-accent);
+  background: transparent;
+}
+.btn.primary {
+  background: var(--sl-color-accent);
+  color: #fff;
+}
+:root[data-theme='dark'] .btn.primary {
+  background: #a9cdf5;
+  border-color: #a9cdf5;
+  color: #08203a;
+}
+.btn:hover {
+  filter: brightness(1.08);
+}
+.cols {
+  display: grid;
+  gap: 1.25rem;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  margin-top: 1.5rem;
+}
+.cols > div,
+.card {
+  border: 1px solid var(--awp-line);
+  border-radius: 0.5rem;
+  padding: 1rem 1.1rem;
+  background: var(--sl-color-bg-nav);
+}
+.cols h3,
+.card h3 {
+  margin: 0 0 0.4rem;
+  font-size: var(--sl-text-lg);
+}
+.cols p,
+.card p {
+  margin: 0.3rem 0;
+  font-size: var(--sl-text-sm);
+}
+.card .expressive-code {
+  margin-top: 0.6rem;
+}
+.card a.more {
+  font-size: var(--sl-text-sm);
+}
+.split {
+  display: grid;
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+@media (min-width: 56rem) {
+  .split {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.awp-home table {
+  width: 100%;
+  display: table;
+  margin-top: 1.25rem;
+}
+.awp-home th,
+.awp-home td {
+  vertical-align: top;
+}
+.note {
+  border-inline-start: 4px solid var(--sl-color-accent);
+  padding: 0.6rem 1rem;
+  background: var(--sl-color-accent-low);
+  margin-top: 1.25rem;
+  max-width: 48rem;
+  font-size: var(--sl-text-sm);
+}
+.diagram {
+  margin: 1.25rem 0 0;
+}
+.diagram svg {
+  width: 100%;
+  height: auto;
+  max-width: 44rem;
+  color: var(--sl-color-white);
+}
+.diagram svg .box {
+  fill: var(--sl-color-bg-nav);
+  stroke: var(--sl-color-gray-3);
+  stroke-width: 1.5;
+}
+.diagram svg .box.gate {
+  stroke: var(--sl-color-accent-high);
+  stroke-width: 2.5;
+}
+.diagram svg text {
+  fill: currentColor;
+  font-family: var(--sl-font-system-mono);
+  font-size: 13px;
+}
+.diagram svg .arrow {
+  stroke: currentColor;
+  stroke-width: 1.5;
+  fill: none;
+}
+.diagram svg .head {
+  fill: currentColor;
+}
+.diagram figcaption {
+  font-size: var(--sl-text-sm);
+  color: var(--sl-color-gray-2);
+  margin-top: 0.5rem;
+}
+.diagram details {
+  margin-top: 0.5rem;
+  font-size: var(--sl-text-sm);
+}
+.diagram pre {
+  font-family: var(--sl-font-system-mono);
+  overflow-x: auto;
+  background: var(--awp-code-bg);
+  padding: 0.75rem 1rem;
+  border-radius: 0.4rem;
+  line-height: 1.35;
+}
+.flow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 1.25rem 0;
+  font-family: var(--sl-font-system-mono);
+  font-size: var(--sl-text-sm);
+}
+.flow li {
+  border: 1px solid var(--awp-line);
+  border-radius: 0.4rem;
+  padding: 0.35rem 0.7rem;
+  background: var(--sl-color-bg-nav);
+}
+.flow li:not(:last-child)::after {
+  content: '\2192';
+  margin-inline-start: 0.7rem;
+  color: var(--sl-color-gray-3);
+}
+.events {
+  columns: 2;
+  font-family: var(--sl-font-system-mono);
+  font-size: var(--sl-text-sm);
+  padding-inline-start: 1.2rem;
+}
+.closing {
+  font-size: var(--sl-text-xl);
+  font-weight: 700;
+  max-width: 44rem;
+  margin-top: 1.25rem;
+}
+.awp-home .cols > *,
+.awp-home .split > *,
+.awp-home .hero-grid > * {
+  margin-top: 0 !important;
+}
+.awp-home .hero-grid {
+  padding-top: 1rem;
+}
+.awp-home .card .expressive-code {
+  margin-top: 0.6rem !important;
+}
+.awp-home dl {
+  margin: 0;
+}
+.awp-home dt {
+  font-weight: 700;
+  margin-top: 0.6rem;
+}
+.awp-home dd {
+  margin: 0;
+  color: var(--sl-color-gray-2);
+  font-size: var(--sl-text-sm);
+}

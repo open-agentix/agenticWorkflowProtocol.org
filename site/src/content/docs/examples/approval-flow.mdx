@@ -1,0 +1,24 @@
+---
+title: "Approval flow"
+description: "A Policy that requires human approval for production actions."
+banner:
+  content: "Draft - v1alpha1. Fields and semantics may change before v1beta1."
+---
+
+import { Code } from '@astrojs/starlight/components';
+import example from '../../../generated/examples/no-production-autonomy.policy.yaml?raw';
+
+
+<Code code={example} lang="yaml" title="no-production-autonomy.policy.yaml" />
+
+The first rule makes every `production.deploy` wait for a release manager. The second requires two distinct approvers, one release manager and one security reviewer, for merges in production. Combine it with separation of duties:
+
+```yaml
+approval:
+  separationOfDuties:
+    enabled: true
+    rules:
+      - actorCannotApproveOwnAction: true
+```
+
+See [Human approval](/governance/human-approval/) and [Separation of duties](/governance/separation-of-duties/).

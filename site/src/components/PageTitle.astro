@@ -1,0 +1,7 @@
+---
+import Default from '@astrojs/starlight/components/PageTitle.astro';
+// The homepage supplies its own <h1> ("Define. Govern. Execute."); every other page uses the default title.
+const isHome = Astro.locals.starlightRoute.id === '';
+---
+
+{isHome ? <span id="_top" /> : <Default><slot /></Default>}

@@ -1,0 +1,18 @@
+---
+title: "EU data residency"
+description: "A reusable Policy that denies personal data leaving a region."
+banner:
+  content: "Draft - v1alpha1. Fields and semantics may change before v1beta1."
+---
+
+import { Code } from '@astrojs/starlight/components';
+import example from '../../../generated/examples/eu-data-residency.policy.yaml?raw';
+
+
+<Code code={example} lang="yaml" title="eu-data-residency.policy.yaml" />
+
+The rule matches operations whose data class is `personal` or `sensitive` and whose destination region is not `EU`, and denies them. If the region cannot be determined the operation is denied as well (fail closed). Region identifiers are organizational strings.
+
+See [Policy-as-Code](/governance/policy-as-code/).
+
+AWP provides machine-readable governance primitives that can help organizations implement and enforce their own compliance requirements. Compliance depends on the implementation, organizational controls and applicable regulatory requirements.
