@@ -8,9 +8,14 @@ API versions (`v1alpha1`, ...) are versioned separately, see [GOVERNANCE.md](GOV
 
 ## [Unreleased]
 
+### Changed
+
+- Website: restyled as a documentation site (introduction page at `/`, sidebar with version label, on-this-page table of contents, prev/next links, mobile drawer, scrollable tables and code blocks); the marketing homepage was removed and its content moved into the docs pages.
+
 ### Added
 
 - Website (`site/`): Astro Starlight site with homepage, concept, governance, security, integration, example and implementation pages, the specification rendered from `spec/`, offline Pagefind search, dark/light themes, link check, size budget and accessibility check, and a GitHub Pages workflow (`.github/workflows/pages.yml`).
+- Website: Quickstart page and `llms.txt` / `llms-full.txt` generated at build time.
 
 - Repository scaffold: README, licenses (CC BY 4.0 for specification text, Apache-2.0 for code),
   Code of Conduct, contributing guide with DCO, governance, security policy, issue and pull request

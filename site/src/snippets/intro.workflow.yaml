@@ -23,19 +23,8 @@ spec:
   workflow:
     - id: fix
       agent: fixer
-    - id: test
-      type: command
-      command: npm test
-      dependsOn: [fix]
   permissions:
     default: deny
     tools:
-      shell.execute:
-        allow: true
       production.deploy:
         allow: false
-  policies:
-    merge:
-      allow: false
-    production:
-      allow: false

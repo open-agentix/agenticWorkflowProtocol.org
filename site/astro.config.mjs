@@ -4,7 +4,27 @@ import starlight from '@astrojs/starlight';
 const site = 'https://agenticworkflowprotocol.org';
 const repo = 'https://github.com/open-agentix/agenticWorkflowProtocol.org';
 
+// Wraps every table in a focusable, horizontally scrolling region so wide tables never widen the page.
+function rehypeWrapTables() {
+  const walk = (node) => {
+    if (!node.children) return;
+    node.children = node.children.map((child) => {
+      if (child.type === 'element' && child.tagName === 'table') {
+        return {
+          type: 'element', tagName: 'div',
+          properties: { className: ['table-wrap'], tabindex: 0, role: 'region', 'aria-label': 'Table, scrollable' },
+          children: [child],
+        };
+      }
+      walk(child);
+      return child;
+    });
+  };
+  return (tree) => walk(tree);
+}
+
 export default defineConfig({
+  markdown: { rehypePlugins: [rehypeWrapTables] },
   site,
   trailingSlash: 'always',
   build: { format: 'directory' },
@@ -19,8 +39,10 @@ export default defineConfig({
       locales: { root: { label: 'English', lang: 'en' } },
       social: [{ icon: 'github', label: 'GitHub', href: repo }],
       customCss: ['./src/styles/custom.css'],
-      components: { SiteTitle: './src/components/SiteTitle.astro', Footer: './src/components/Footer.astro', PageTitle: './src/components/PageTitle.astro' },
-      pagination: false,
+      components: { SiteTitle: './src/components/SiteTitle.astro', Footer: './src/components/Footer.astro', Sidebar: './src/components/Sidebar.astro' },
+      expressiveCode: { styleOverrides: { borderRadius: '0.75rem', codeFontSize: '0.875rem' } },
+      pagination: true,
+      tableOfContents: { minHeadingLevel: 2, maxHeadingLevel: 3 },
       lastUpdated: false,
       head: [
         // Scrollable code blocks must be reachable by keyboard (WCAG 2.1.1, axe: scrollable-region-focusable).
@@ -35,20 +57,26 @@ export default defineConfig({
         { tag: 'meta', attrs: { name: 'color-scheme', content: 'light dark' } },
       ],
       sidebar: [
+        { label: 'Get started', items: [
+          { label: 'Introduction', link: '/' },
+          { label: 'Quickstart', slug: 'getting-started/quickstart' },
+        ] },
+        { label: 'Learn', items: [
+          { label: 'Concepts', collapsed: true, autogenerate: { directory: 'concepts' } },
+          { label: 'Governance', collapsed: true, autogenerate: { directory: 'governance' } },
+          { label: 'Security', collapsed: true, autogenerate: { directory: 'security' } },
+          { label: 'Integrations', collapsed: true, autogenerate: { directory: 'integrations' } },
+        ] },
         { label: 'Specification', items: [
           { label: 'Overview', slug: 'specification' },
-          { label: 'v1alpha1', slug: 'specification/v1alpha1' },
+          { label: 'v1alpha1 (draft)', slug: 'specification/v1alpha1' },
           { label: 'Glossary', slug: 'specification/v1alpha1/glossary' },
           { label: 'Versioning', slug: 'specification/versioning' },
+          { label: 'CLI output formats', slug: 'tooling/cli' },
           { label: 'Changelog', slug: 'specification/changelog' },
         ] },
-        { label: 'Concepts', autogenerate: { directory: 'concepts' } },
-        { label: 'Governance', autogenerate: { directory: 'governance' } },
-        { label: 'Security', autogenerate: { directory: 'security' } },
-        { label: 'Integrations', autogenerate: { directory: 'integrations' } },
         { label: 'Examples', autogenerate: { directory: 'examples' } },
         { label: 'Implementations', autogenerate: { directory: 'implementations' } },
-        { label: 'Tooling', autogenerate: { directory: 'tooling' } },
         { label: 'Community', autogenerate: { directory: 'community' } },
       ],
     }),

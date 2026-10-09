@@ -5,6 +5,9 @@ banner:
   content: "Draft - v1alpha1. Fields and semantics may change before v1beta1."
 ---
 
+import { Code } from '@astrojs/starlight/components';
+import { cards } from '../../../snippets/governance-cards.ts';
+
 Agentic systems need more than intelligence. They need boundaries. AWP lets a manifest declare them and requires a governance-profile runtime to enforce them.
 
 - [Identity and ownership](/governance/identity-and-ownership/)
@@ -17,6 +20,19 @@ Agentic systems need more than intelligence. They need boundaries. AWP lets a ma
 - [Separation of duties](/governance/separation-of-duties/)
 - [Environments](/governance/environments/)
 - [Policy-as-Code](/governance/policy-as-code/)
+
+## At a glance
+
+Each area is declared in the manifest; the excerpts below are shortened.
+
+{cards.map((c) => (
+  <div>
+    <h3>{c.title}</h3>
+    <p>{c.text}</p>
+    <Code code={c.code} lang="yaml" />
+    <p><a href={c.href}>Read more<span class="sr-only"> about {c.title}</span></a></p>
+  </div>
+))}
 
 Normative text: [Governance](/specification/v1alpha1/#7-governance).
 

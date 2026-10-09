@@ -1,0 +1,89 @@
+---
+import Default from '@astrojs/starlight/components/Sidebar.astro';
+---
+
+<div class="awp-versions">
+  <p class="lbl">Specification version</p>
+  <details>
+    <summary id="awp-version-select"><span>v1alpha1 <em>(draft)</em></span></summary>
+    <ul>
+      <li><a href="/specification/v1alpha1/" aria-current="true">v1alpha1 <em>(draft)</em></a></li>
+      <li class="none">No other versions yet. See <a href="/specification/versioning/">versioning</a>.</li>
+    </ul>
+  </details>
+</div>
+<Default><slot /></Default>
+
+<style>
+  .awp-versions {
+    margin-bottom: 1.25rem;
+    position: relative;
+  }
+  .lbl {
+    display: block;
+    font-size: 0.75rem;
+    color: var(--sl-color-gray-3);
+    margin: 0 0 0.3rem;
+  }
+  details {
+    border: 1px solid var(--sl-color-hairline);
+    border-radius: 0.5rem;
+    background: var(--sl-color-bg);
+  }
+  summary {
+    cursor: pointer;
+    min-height: 2.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 0.75rem;
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-white);
+    list-style: none;
+  }
+  summary::-webkit-details-marker {
+    display: none;
+  }
+  summary::after {
+    content: '';
+    width: 0.5rem;
+    height: 0.5rem;
+    border-right: 2px solid currentColor;
+    border-bottom: 2px solid currentColor;
+    transform: rotate(45deg) translateY(-2px);
+  }
+  details[open] summary::after {
+    transform: rotate(225deg);
+  }
+  em {
+    font-style: normal;
+    color: var(--sl-color-gray-3);
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0.25rem;
+    border-top: 1px solid var(--sl-color-hairline);
+    font-size: var(--sl-text-sm);
+  }
+  li a {
+    display: block;
+    padding: 0.7rem 0.5rem;
+    border-radius: 0.35rem;
+    text-decoration: none;
+    color: var(--sl-color-white);
+  }
+  li a[aria-current] {
+    background: var(--sl-color-accent-low);
+  }
+  .none {
+    padding: 0.5rem;
+    color: var(--sl-color-gray-3);
+  }
+  .none a {
+    display: inline;
+    padding: 0;
+    color: var(--sl-color-text-accent);
+    text-decoration: underline;
+  }
+</style>

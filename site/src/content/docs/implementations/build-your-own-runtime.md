@@ -13,3 +13,39 @@ banner:
 6. Open a pull request to be listed on the [implementations](/implementations/) page.
 
 Optionally provide the [CLI commands](/tooling/cli/) with the specified output formats.
+
+## Example: plan output
+
+A command such as `awp plan` can show what a workflow may do before it runs (illustrative; see [CLI output formats](/tooling/cli/) for the specified formats):
+
+```text title="terminal"
+$ awp plan workflow.yaml
+
+AWP Execution Plan
+
+Workflow: vulnerability-fixer
+Version: 0.1.0
+
+Agents:
+  researcher → claude
+  fixer      → qwen3
+
+Tools:
+  github.read
+  github.write
+  shell.execute
+
+Policies:
+  ✓ cost limit
+  ✓ tool permissions
+  ✓ network policy
+  ✓ production restriction
+
+Human approval:
+  required before merge
+
+Estimated maximum:
+  30 steps
+  $2.00
+  15 minutes
+```
