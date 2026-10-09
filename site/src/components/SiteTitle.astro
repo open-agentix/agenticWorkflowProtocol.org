@@ -1,0 +1,71 @@
+---
+import Default from '@astrojs/starlight/components/SiteTitle.astro';
+
+const path = Astro.url.pathname;
+const links = [
+  ['Specification', '/specification/'],
+  ['Concepts', '/concepts/overview/'],
+  ['Governance', '/governance/'],
+  ['Security', '/security/'],
+  ['Integrations', '/integrations/'],
+  ['Examples', '/examples/'],
+  ['Implementations', '/implementations/'],
+];
+const section = (href: string) => `/${href.split('/')[1]}/`;
+const current = (href: string) => path.startsWith(section(href));
+---
+
+<div class="awp-title">
+  <Default><slot /></Default>
+  <nav class="awp-nav" aria-label="Primary">
+    <ul>
+      {
+        links.map(([label, href]) => (
+          <li>
+            <a href={href} aria-current={current(href) ? 'page' : undefined}>
+              {label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+</div>
+
+<style>
+  .awp-title {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    min-width: 0;
+  }
+  .awp-nav {
+    display: none;
+  }
+  @media (min-width: 72rem) {
+    .awp-nav {
+      display: block;
+    }
+  }
+  ul {
+    display: flex;
+    gap: 1rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: var(--sl-text-sm);
+  }
+  a {
+    color: var(--sl-color-gray-2);
+    text-decoration: none;
+    padding: 0.25rem 0.1rem;
+    border-bottom: 2px solid transparent;
+  }
+  a:hover {
+    color: var(--sl-color-white);
+  }
+  a[aria-current='page'] {
+    color: var(--sl-color-white);
+    border-bottom-color: var(--sl-color-accent);
+  }
+</style>

@@ -1,0 +1,50 @@
+---
+import Default from '@astrojs/starlight/components/Footer.astro';
+const repo = 'https://github.com/open-agentix/agenticWorkflowProtocol.org';
+---
+
+<Default><slot /></Default>
+<div class="awp-footer">
+  <p class="statement">AWP is a specification, not a platform. OpenAgentix is one implementation.</p>
+  <nav aria-label="Footer">
+    <ul>
+      <li><a href="/community/code-of-conduct/">Code of Conduct</a></li>
+      <li><a href="/community/governance/">Governance</a></li>
+      <li><a href="/community/security-policy/">Security policy</a></li>
+      <li><a href="/community/contributing/">Contributing</a></li>
+      <li><a href="/specification/changelog/">Changelog</a></li>
+      <li><a href={repo} rel="noopener">GitHub</a></li>
+      <li><a href={`${repo}/discussions`} rel="noopener">Discussions</a></li>
+    </ul>
+  </nav>
+  <p>
+    Specification text: <a href={`${repo}/blob/main/LICENSE-SPEC`} rel="noopener">CC BY 4.0</a>. Code, schemas and
+    conformance tests: <a href={`${repo}/blob/main/LICENSE`} rel="noopener">Apache-2.0</a>. Contact:
+    <a href="mailto:info@openagentix.si">info@openagentix.si</a>
+  </p>
+</div>
+
+<style>
+  .awp-footer {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--sl-color-hairline);
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-2);
+  }
+  .awp-footer p {
+    margin: 0.4rem 0;
+  }
+  .statement {
+    color: var(--sl-color-white);
+    font-weight: 600;
+  }
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem 1.25rem;
+    list-style: none;
+    padding: 0;
+    margin: 0.5rem 0;
+  }
+</style>

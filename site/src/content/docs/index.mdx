@@ -1,0 +1,418 @@
+---
+title: Agentic Workflow Protocol
+description: AWP is an open standard for portable, auditable and policy-controlled agentic workflows. Define. Govern. Execute.
+template: splash
+pagefind: true
+head:
+  - tag: meta
+    attrs:
+      name: robots
+      content: index, follow
+---
+
+import { Code } from '@astrojs/starlight/components';
+import hero from '../../snippets/hero.workflow.yaml?raw';
+import fixer from '../../generated/examples/vulnerability-fixer.workflow.yaml?raw';
+import planText from '../../snippets/plan.txt?raw';
+import conformanceStatement from '../../snippets/conformance.yaml?raw';
+import noProd from '../../generated/examples/no-production-autonomy.policy.yaml?raw';
+import euRes from '../../generated/examples/eu-data-residency.policy.yaml?raw';
+import { cards } from '../../snippets/governance-cards.ts';
+
+export const repo = 'https://github.com/open-agentix/agenticWorkflowProtocol.org';
+
+export const approvalYaml = `approval:
+  requiredFor:
+    - production.deploy
+    - git.merge
+    - external.communication
+  approvers:
+    - role: security-reviewer
+  timeout: 24h
+  separationOfDuties:
+    enabled: true
+    rules:
+      - actorCannotApproveOwnAction: true`;
+
+export const traceText = `Execution ID: awp-exec-01JABC7Q4M2W9X0Y1Z2A3B4C5D
+Workflow:     vulnerability-fixer@0.1.0
+Started:      2026-10-05T13:42:11Z
+
+  01  trigger
+  02  researcher
+  03  github.search
+  04  fixer
+  05  shell.execute
+  06  npm.test
+  07  policy.check
+  08  pull-request
+
+Result:       SUCCESS`;
+
+export const integrationYaml = `tools:
+  - type: mcp
+    server: github
+
+agents:
+  - id: security-agent
+    protocol: a2a
+    endpoint: https://agents.example.com/a2a/security-review`;
+
+export const secretsYaml = `secrets:
+  - name: GITHUB_TOKEN
+    source: secret-manager
+    scope:
+      - github
+
+mcpServers:
+  - name: github
+    transport: streamable-http
+    url: https://mcp.example.com/github
+    auth:
+      secretRef: GITHUB_TOKEN`;
+
+<div class="awp-home">
+
+<section aria-labelledby="hero-title">
+<div class="hero-grid">
+<div>
+
+<p class="eyebrow">Agentic Workflow Protocol · v1alpha1 (draft)</p>
+
+<h1 id="hero-title">Define. Govern. Execute.</h1>
+
+<p class="lede">AWP is an open standard for portable, auditable and policy-controlled agentic workflows.</p>
+
+<div class="cta-row">
+  <a class="btn primary" href="/specification/v1alpha1/">Read the specification</a>
+  <a class="btn" href={repo} rel="noopener">View on GitHub</a>
+</div>
+
+</div>
+<div>
+<Code code={hero} lang="yaml" title="vulnerability-fixer.yaml" />
+</div>
+</div>
+</section>
+
+<section aria-labelledby="what">
+
+<h2 id="what">The declarative standard for agentic workflows.</h2>
+
+AWP describes what an agentic workflow does, within which limits it may run, under which governance it runs and what it leaves behind. Agents are not plain LLM calls; they are controlled workflows with defined capabilities, limits and responsibilities.
+
+<div class="cols">
+<div>
+
+### Define
+Agents, tools, steps, triggers and inputs in one manifest.
+
+</div>
+<div>
+
+### Govern
+Policies, approvals and budgets that a runtime enforces.
+
+</div>
+<div>
+
+### Execute
+Portable across runtimes that implement the specification.
+
+</div>
+<div>
+
+### Audit
+Standard events and decision traces for every execution.
+
+</div>
+</div>
+</section>
+
+<section aria-labelledby="compare">
+
+<h2 id="compare">MCP connects agents to tools. A2A connects agents to agents. AWP defines how agents work.</h2>
+
+<table>
+  <caption class="sr-only">Scope of MCP, A2A and AWP</caption>
+  <thead>
+    <tr><th scope="col"></th><th scope="col">MCP</th><th scope="col">A2A</th><th scope="col">AWP</th></tr>
+  </thead>
+  <tbody>
+    <tr><th scope="row">Scope</th><td>Agents ↔ tools and resources</td><td>Agent ↔ agent communication</td><td>Definition, governance, execution and audit of workflows</td></tr>
+    <tr><th scope="row">Question answered</th><td>How does an agent call this tool?</td><td>How do two agents talk to each other?</td><td>What may this workflow do, who owns it and what happened?</td></tr>
+    <tr><th scope="row">Example artifact</th><td>Tool and resource definitions</td><td>Agent card, task messages</td><td>Workflow, Agent and Policy manifests, audit events</td></tr>
+  </tbody>
+</table>
+
+AWP does not replace MCP or A2A. A manifest references MCP servers as tool sources and A2A endpoints as remote agents.
+
+</section>
+
+<section aria-labelledby="manifest">
+
+<h2 id="manifest">One file describes the workflow, its limits and its rules.</h2>
+
+<Code code={fixer} lang="yaml" title="vulnerability-fixer.workflow.yaml" />
+
+1. `metadata`: name, version, owner, classification and risk level.
+2. `spec.budget`: cost, steps, duration, tokens, tool calls, retries, concurrency.
+3. `spec.agents` and `spec.mcpServers`: who acts and with which tools.
+4. `spec.workflow`: steps with `dependsOn`, including a `command` step.
+5. `spec.permissions` and `spec.policies`: what is allowed, what is not.
+
+<p><a href="/examples/vulnerability-fixer/">Annotated walkthrough</a></p>
+</section>
+
+<section aria-labelledby="gov">
+
+<h2 id="gov">Agentic systems need more than intelligence. They need boundaries.</h2>
+
+Governance rules are declared in the manifest and enforced by the runtime.
+
+<div class="cols">
+{cards.map((c) => (
+  <div class="card">
+    <h3>{c.title}</h3>
+    <p>{c.text}</p>
+    <Code code={c.code} lang="yaml" frame="none" />
+    <a class="more" href={c.href}>Read more<span class="sr-only"> about {c.title}</span></a>
+  </div>
+))}
+</div>
+
+<p class="note">AWP provides machine-readable governance primitives that can help organizations implement and enforce their own compliance requirements. Compliance depends on the implementation, organizational controls and applicable regulatory requirements.</p>
+</section>
+
+<section aria-labelledby="sec">
+
+<h2 id="sec">Trusted agent supply chain. Know what runs before you let it run.</h2>
+
+<div class="cols">
+<div>
+
+### Secrets by reference
+Manifests name secrets and reference them with `secretRef`. A literal token in a manifest is rejected.
+
+</div>
+<div>
+
+### Integrity
+Immutable versions, manifest digests, signatures, provenance, trusted registries and dependency declarations.
+
+</div>
+<div>
+
+### Fail closed
+Unknown fields in governance sections and policies that cannot be evaluated deny instead of allow.
+
+</div>
+</div>
+
+<div class="split">
+<Code code={secretsYaml} lang="yaml" />
+<div>
+<p>Read more: <a href="/security/secrets/">secrets</a>, <a href="/security/supply-chain/">supply chain</a>, <a href="/security/threat-model/">threat model</a>.</p>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="audit">
+
+<h2 id="audit">Execution needs auditability.</h2>
+
+<div class="split">
+<div>
+<Code code={traceText} lang="text" title="execution trace" />
+</div>
+<div>
+
+Event families:
+
+<ul class="events">
+  <li>{'workflow.*'}</li>
+  <li>{'agent.*'}</li>
+  <li>{'tool.*'}</li>
+  <li>{'policy.*'}</li>
+  <li>{'approval.*'}</li>
+  <li>{'artifact.*'}</li>
+</ul>
+
+AWP defines the semantics of audit events; implementations may provide tamper-evident storage. Executions can be reproduced from a record of versions, models, tools and policies. Decision traces record actions, evidence and policy checks, not private model reasoning.
+
+<p><a href="/concepts/audit-events/">Audit events</a> · <a href="/concepts/decision-trace/">Decision trace</a></p>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="hitl">
+
+<h2 id="hitl">Some actions need a human decision.</h2>
+
+<div class="split">
+<figure class="diagram">
+<svg viewBox="0 0 420 470" role="img" aria-labelledby="hitl-t hitl-d">
+  <title id="hitl-t">Human approval gate</title>
+  <desc id="hitl-d">Flow from Agent to Analyze, Implement and Test, then a Human Approval gate with the checks Security Review and Policy Check, then Deploy.</desc>
+  <defs><marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="head" d="M0 0L10 5L0 10z" /></marker></defs>
+  <rect class="box" x="130" y="8" width="160" height="38" rx="6" /><text x="210" y="32" text-anchor="middle">Agent</text>
+  <path class="arrow" d="M210 46V70" marker-end="url(#ah)" />
+  <rect class="box" x="130" y="72" width="160" height="38" rx="6" /><text x="210" y="96" text-anchor="middle">Analyze</text>
+  <path class="arrow" d="M210 110V134" marker-end="url(#ah)" />
+  <rect class="box" x="130" y="136" width="160" height="38" rx="6" /><text x="210" y="160" text-anchor="middle">Implement</text>
+  <path class="arrow" d="M210 174V198" marker-end="url(#ah)" />
+  <rect class="box" x="130" y="200" width="160" height="38" rx="6" /><text x="210" y="224" text-anchor="middle">Test</text>
+  <path class="arrow" d="M210 238V262" marker-end="url(#ah)" />
+  <rect class="box gate" x="70" y="264" width="280" height="110" rx="8" />
+  <text x="210" y="292" text-anchor="middle" font-weight="700">Human Approval</text>
+  <text x="110" y="327">✓ Security Review</text>
+  <text x="110" y="352">✓ Policy Check</text>
+  <path class="arrow" d="M210 374V400" marker-end="url(#ah)" />
+  <rect class="box" x="130" y="402" width="160" height="38" rx="6" /><text x="210" y="426" text-anchor="middle">Deploy</text>
+</svg>
+<figcaption>The runtime pauses before the action and does not continue until the required approvals are granted by authenticated humans. Agents cannot approve.</figcaption>
+<details>
+<summary>Text version</summary>
+<pre aria-label="Text version of the approval flow">{`Agent
+  |
+Analyze
+  |
+Implement
+  |
+Test
+  |
++----------------------+
+| Human Approval       |
+|                      |
+| [x] Security Review  |
+| [x] Policy Check     |
++----------+-----------+
+           |
+        Deploy`}</pre>
+</details>
+</figure>
+<div>
+<Code code={approvalYaml} lang="yaml" />
+<p><a href="/governance/human-approval/">Human approval</a> · <a href="/governance/separation-of-duties/">Separation of duties</a></p>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="pac">
+
+<h2 id="pac">Policy-as-Code for agentic systems.</h2>
+
+Policies are declarative, evaluated by the runtime before an action, and every evaluation produces a `policy.evaluated` event.
+
+<div class="split">
+<Code code={noProd} lang="yaml" title="no-production-autonomy.policy.yaml" />
+<Code code={euRes} lang="yaml" title="eu-data-residency.policy.yaml" />
+</div>
+<p><a href="/governance/policy-as-code/">Policy-as-Code</a></p>
+</section>
+
+<section aria-labelledby="stack">
+
+<h2 id="stack">Built on an open agentic stack.</h2>
+
+<div class="split">
+<figure class="diagram">
+<svg viewBox="0 0 420 250" role="img" aria-labelledby="stk-t stk-d">
+  <title id="stk-t">AWP above A2A and MCP</title>
+  <desc id="stk-d">AWP, agentic workflows, sits on top. Below it, A2A for agent communication and MCP for tools and data.</desc>
+  <rect class="box gate" x="100" y="8" width="220" height="62" rx="8" /><text x="210" y="35" text-anchor="middle" font-weight="700">AWP</text><text x="210" y="55" text-anchor="middle">Agentic workflows</text>
+  <path class="arrow" d="M160 70V120M260 70V120" marker-end="url(#ah2)" />
+  <defs><marker id="ah2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path class="head" d="M0 0L10 5L0 10z" /></marker></defs>
+  <rect class="box" x="40" y="124" width="150" height="62" rx="8" /><text x="115" y="151" text-anchor="middle" font-weight="700">A2A</text><text x="115" y="171" text-anchor="middle">Agent communication</text>
+  <rect class="box" x="230" y="124" width="150" height="62" rx="8" /><text x="305" y="151" text-anchor="middle" font-weight="700">MCP</text><text x="305" y="171" text-anchor="middle">Tools &amp; data</text>
+</svg>
+<figcaption>AWP references MCP and A2A. It does not replace them.</figcaption>
+</figure>
+<div>
+<Code code={integrationYaml} lang="yaml" />
+<p><a href="/integrations/mcp/">MCP</a> · <a href="/integrations/a2a/">A2A</a></p>
+</div>
+</div>
+</section>
+
+<section aria-labelledby="sim">
+
+<h2 id="sim">Know the plan before it runs.</h2>
+
+A common command vocabulary is specified: `awp validate`, `awp lint`, `awp simulate`, `awp plan`, `awp run`, `awp audit`. The CLI is a specified interface (output formats), not a product; any implementation may provide it.
+
+<Code code={planText} lang="text" title="terminal" />
+
+<p><a href="/tooling/cli/">CLI output formats</a></p>
+</section>
+
+<section aria-labelledby="conf">
+
+<h2 id="conf">Build your own AWP runtime.</h2>
+
+AWP is not tied to OpenAgentix. A runtime declares which conformance profiles it implements and which optional features it does not support. A public conformance test suite for manifests is in the repository.
+
+<div class="split">
+<dl>
+  <dt><code>core</code></dt><dd>Parse and validate manifests, execute the step graph, enforce budgets and permissions.</dd>
+  <dt><code>governance</code></dt><dd>Ownership, data policy, model policy, approvals, risk levels, environments, policies.</dd>
+  <dt><code>audit</code></dt><dd>Event envelope, all event types, decision and reproducibility records.</dd>
+  <dt><code>security</code></dt><dd>Digests, signatures, image pinning, isolation, secret redaction.</dd>
+  <dt><code>mcp</code></dt><dd>MCP servers as tool sources, action identifiers per tool call.</dd>
+  <dt><code>a2a</code></dt><dd>Remote agents with verified agent cards.</dd>
+</dl>
+<Code code={conformanceStatement} lang="yaml" title="conformance statement (illustrative)" />
+</div>
+<p><a href="/implementations/conformance/">Conformance profiles</a> · <a href="/implementations/build-your-own-runtime/">Build your own runtime</a></p>
+</section>
+
+<section aria-labelledby="oss">
+
+<h2 id="oss">AWP is an open specification.</h2>
+
+<ol class="flow">
+  <li>Specification</li>
+  <li>Open governance</li>
+  <li>Reference implementation</li>
+  <li>Conformance tests</li>
+  <li>Ecosystem</li>
+</ol>
+
+<div class="cols">
+<div>
+
+### Platforms which support AWP
+**OpenAgentix**: reference implementation, in progress. It does not yet conform to any profile.
+
+</div>
+<div>
+
+### Call for implementations
+If you build a runtime, validator or tool for AWP, tell us. Listing requires a public statement of the supported conformance profiles. <a href="/implementations/">How to be listed</a>
+
+</div>
+<div>
+
+### Licenses
+Specification text: CC BY 4.0. Code, schemas and conformance tests: Apache-2.0.
+
+</div>
+</div>
+
+<p class="closing">AWP is a specification, not a platform. OpenAgentix is one implementation.</p>
+</section>
+
+<section aria-labelledby="cta">
+
+<h2 id="cta">Help define the contract.</h2>
+
+<div class="cta-row">
+  <a class="btn primary" href="/specification/v1alpha1/">Read the specification</a>
+  <a class="btn" href={`${repo}/issues/new/choose`} rel="noopener">Open an issue</a>
+  <a class="btn" href={`${repo}/discussions`} rel="noopener">Join the discussion</a>
+</div>
+
+<p>Contact: <a href="mailto:info@openagentix.si">{'info@openagentix.si'}</a></p>
+</section>
+
+</div>

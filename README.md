@@ -84,6 +84,7 @@ public statement of the supported conformance profiles.
 | ---- | ------- |
 | `spec/` | Normative specification text (planned for `v1alpha1`) |
 | `docs/` | Concept documentation and website plan |
+| `site/` | Website (Astro Starlight), see [site/README.md](site/README.md) |
 | `CNAME` | Custom domain for GitHub Pages (`agenticworkflowprotocol.org`) |
 
 ## Contributing

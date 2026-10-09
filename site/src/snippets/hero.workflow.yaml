@@ -1,0 +1,41 @@
+apiVersion: awp.agenticworkflowprotocol.org/v1alpha1
+kind: Workflow
+metadata:
+  name: vulnerability-fixer
+  version: 0.1.0
+  owner:
+    team: security-team
+  classification: internal
+  risk:
+    level: medium
+spec:
+  triggers:
+    - type: manual
+  budget:
+    maxCostUsd: 2.00
+    maxSteps: 30
+    maxDuration: 15m
+  agents:
+    - id: fixer
+      model:
+        provider: ollama
+        name: qwen3
+  workflow:
+    - id: fix
+      agent: fixer
+    - id: test
+      type: command
+      command: npm test
+      dependsOn: [fix]
+  permissions:
+    default: deny
+    tools:
+      shell.execute:
+        allow: true
+      production.deploy:
+        allow: false
+  policies:
+    merge:
+      allow: false
+    production:
+      allow: false
