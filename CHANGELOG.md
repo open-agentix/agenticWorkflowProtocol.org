@@ -14,6 +14,8 @@ API versions (`v1alpha1`, ...) are versioned separately, see [GOVERNANCE.md](GOV
 
 ### Added
 
+- OpenAgentix alignment documents (`docs/alignment/`, informative, not adopted): field-by-field alignment matrix v2 against the current `agents.md` source and examples with a prototype converter evaluation (no example converts cleanly; all produce valid AWP manifests only in lossy mode), a proposal for the `x-openagentix-*` extension namespace, a single-source-of-truth workflow (schema pin, drift test, conformance CI) and a phased plan with open decisions. OpenAgentix remains not conformant; no conformance claim is made.
+- Proposed (Draft, not accepted) AWP Enhancement Proposals `aep/0001` to `aep/0011`: conditional steps, argument constraints and call limits in permissions (no prefix wildcards), typed handoffs, event references, kind `Prompt`, kind `Playbook`, MCP connection catalog, model and provider catalog, audit payload levels, digest canonicalisation and required extensions. They do not change `v1alpha1`.
 - Website (`site/`): Astro Starlight site with homepage, concept, governance, security, integration, example and implementation pages, the specification rendered from `spec/`, offline Pagefind search, dark/light themes, link check, size budget and accessibility check, and a GitHub Pages workflow (`.github/workflows/pages.yml`).
 - Website: Quickstart page and `llms.txt` / `llms-full.txt` generated at build time.
 
