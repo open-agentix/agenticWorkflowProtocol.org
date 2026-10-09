@@ -1,0 +1,47 @@
+name: Specification change
+description: Propose a new field, changed semantics or a new conformance requirement
+labels: [spec]
+body:
+  - type: markdown
+    attributes:
+      value: 'Security problems: please do NOT open an issue, see SECURITY.md.'
+  - type: input
+    id: version
+    attributes:
+      label: API version
+      description: 'For example v1alpha1'
+    validations:
+      required: true
+  - type: input
+    id: section
+    attributes:
+      label: Affected section
+      description: 'File and section, for example spec/v1alpha1/README.md section 7 (Policies)'
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What cannot be expressed or is ambiguous today? Who is affected?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+      description: Proposed normative text (MUST/SHOULD/MAY) and a YAML example.
+    validations:
+      required: true
+  - type: textarea
+    id: compatibility
+    attributes:
+      label: Compatibility and conformance impact
+      description: Is this a breaking change? Which conformance profiles are affected?
+  - type: checkboxes
+    id: neutrality
+    attributes:
+      label: Checks
+      options:
+        - label: The proposal does not require a specific vendor, provider or runtime.
+          required: true
+        - label: The proposal makes no compliance claim and contains no secrets or real personal data.
+          required: true
