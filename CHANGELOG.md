@@ -28,6 +28,7 @@ API versions (`v1alpha1`, ...) are versioned separately, see [GOVERNANCE.md](GOV
   dependencies (`ajv`, `yaml`).
 - Command-line output formats for `awp validate`, `awp lint`, `awp simulate`, `awp plan`, `awp run`
   and `awp audit`, including diagnostics, exit codes and the plan output (`docs/cli.md`).
+- Mapping of the OpenAgentix `agents.md` syntax to AWP `v1alpha1` (`docs/mapping-agents-md.md`): field-by-field table, converter design, round-trip expectations and the work needed per conformance profile, plus a website page on the OpenAgentix implementation status (not conformant).
 
 ### Changed
 
