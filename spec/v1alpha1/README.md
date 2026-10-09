@@ -1466,8 +1466,8 @@ conformance:
 ### 11.4 Command-line interface (informative)
 
 AWP anticipates a common command-line vocabulary (`awp validate`, `awp lint`, `awp simulate`,
-`awp plan`, `awp run`, `awp audit`). Output formats will be specified separately; any
-implementation may provide these commands.
+`awp plan`, `awp run`, `awp audit`). Output formats are described in
+[docs/cli.md](../../docs/cli.md); any implementation may provide these commands.
 
 ---
 
