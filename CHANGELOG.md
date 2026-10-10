@@ -10,6 +10,8 @@ API versions (`v1alpha1`, ...) are versioned separately, see [GOVERNANCE.md](GOV
 
 ### Changed
 
+- Docs: `GOVERNANCE.md`, `CONTRIBUTING.md` and the AEP process describe how changes are really
+  reviewed (independent review agent, no guarantee of a human read before merge).
 - Website: restyled as a documentation site (introduction page at `/`, sidebar with version label, on-this-page table of contents, prev/next links, mobile drawer, scrollable tables and code blocks); the marketing homepage was removed and its content moved into the docs pages.
 
 ### Added

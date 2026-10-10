@@ -18,14 +18,35 @@ repository [`open-agentix/agenticWorkflowProtocol.org`](https://github.com/open-
 ## Transparency: written with an agent
 
 Much of the text and tooling is drafted by **agentix-zero**, the project's AI agent account.
-Humans stay accountable: every change is reviewed by a human maintainer, and decisions are owned
-by the maintainers. agentix-zero has no decision rights of its own.
+The maintainers stay accountable and own the decisions. agentix-zero has no decision rights of
+its own.
+
+### How changes are reviewed
+
+The specification and tooling are built mostly by AI agents under the maintainer's direction.
+
+- Pull requests are authored by agents (the implementation model).
+- A second, independent review agent (a stronger model) reviews each pull request. For
+  security-relevant changes this is a dedicated adversarial security review with a fix round and
+  real test runs.
+- The lead agent merges (squash merge) under the maintainer's standing authorisation.
+- There is **no guarantee that a human reads every change before it is merged.**
+- The maintainer sets the direction, answers design questions, can inspect, revert and block
+  changes at any time, and decides on releases.
+- External contributions from people are reviewed by the maintainer.
+
+Requiring a human approval for sensitive paths through `CODEOWNERS` and branch protection is
+possible and planned as an optional governance setting. It is not enforced today.
+
+**How to verify:** the pull request history shows who authored, reviewed and merged each change and
+keeps the review comments; the AEPs in [`aep/`](aep/) record specification decisions; the
+[CHANGELOG](CHANGELOG.md) lists what shipped in each release.
 
 ## Roles
 
 - **Implementers** build runtimes, validators and tools that implement AWP.
 - **Contributors** propose changes, review, write documentation and examples. Everyone is welcome.
-- **Maintainers** review and merge pull requests, publish specification versions and steward the
+- **Maintainers** set the direction, review pull requests from people, publish specification versions and steward the
   roadmap.
 
 | Maintainer   | GitHub              | Areas |
