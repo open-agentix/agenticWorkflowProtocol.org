@@ -2,14 +2,14 @@
 
 | | |
 | --- | --- |
-| **Status** | **Draft proposal. Not adopted.** |
+| **Status** | **Adopted** by decision of the project lead on 2026-10-10 ([decision log D1](alignment/decisions.md#d1-aep-process-adopted)); in force from the merge of the adopting pull request, after the public discussion period of [GOVERNANCE.md](../GOVERNANCE.md#decision-process) |
 | **Scope** | Additions to [GOVERNANCE.md](../GOVERNANCE.md): AEP lifecycle, numbering and template; versioning of the specification; rules for a future conformance mark |
-| **Adoption** | Through the substantive change process of [GOVERNANCE.md](../GOVERNANCE.md#decision-process): public discussion of at least 5 working days, then lazy consensus of the maintainers |
+| **Adoption** | Through the substantive change process of [GOVERNANCE.md](../GOVERNANCE.md#decision-process): public discussion of at least 5 working days, then lazy consensus of the maintainers. Later changes to this document need a `Process` AEP. |
 | **Template** | [`aep/0000-template.md`](../aep/0000-template.md) |
 
-> This document is a proposal. Until it is adopted, the decision process of
-> [GOVERNANCE.md](../GOVERNANCE.md) applies unchanged. No AEP has been accepted yet, no conformance
-> mark exists, and no implementation has been certified or has received a mark. Nothing here is a
+> Sections 1 to 6 and 7.0 are the adopted process. Sections 7.1 to 7.5 (conformance mark) remain
+> a proposal: no conformance mark exists, and no implementation has been certified or has received
+> a mark. No AEP has been accepted yet. Nothing here is a
 > compliance promise: AWP provides machine-readable governance primitives that can help
 > organizations implement and enforce their own compliance requirements; compliance depends on the
 > implementation, organizational controls and applicable regulatory requirements.
@@ -21,8 +21,10 @@
 3. [Numbering and files](#3-numbering-and-files)
 4. [Lifecycle](#4-lifecycle)
 5. [Roles and decisions](#5-roles-and-decisions)
+   - [5.1 Review before acceptance](#51-review-before-acceptance)
 6. [Versioning of the specification](#6-versioning-of-the-specification)
 7. [Conformance mark (proposal)](#7-conformance-mark-proposal)
+   - [7.0 Self-declared schema conformance during alpha](#70-self-declared-schema-conformance-during-alpha)
 8. [Open questions](#8-open-questions)
 
 ## 1. Purpose
@@ -123,6 +125,41 @@ Rules:
   fast track.
 - Text drafted by the project's agent account (agentix-zero) is reviewed by a human maintainer
   before any status change, as for every other change ([GOVERNANCE.md](../GOVERNANCE.md#transparency-written-with-an-agent)).
+- In discussions, "proposed for `<version>`" means the status `Review` with that target API version.
+
+### 5.1 Review before acceptance
+
+Decided on 2026-10-10 ([decision log D16](alignment/decisions.md#d16-external-reviewer-before-accepted)).
+
+1. **No self-acceptance.** An AEP cannot move to `Accepted` on the decision of its author alone,
+   and not on the decision of the project lead alone. This also applies to alpha API versions.
+2. **Shepherd and reviewer are not the author.** The shepherd MUST NOT be listed as an author of
+   the AEP. Before the Final Comment Period starts, at least one **reviewer** records a review in
+   the AEP's pull request or issue (approval, or the objections that remain open). The reviewer
+   is neither an author, nor the shepherd, nor the person on whose behalf an agent account drafted
+   the text.
+3. **External reviewer while the project has one organisation.** As long as all maintainers belong
+   to one organisation, the reviewer of rule 2 MUST be external: not a maintainer, not an author,
+   and not working on OpenAgentix. Agent accounts cannot be reviewers. For AEPs drafted by
+   agentix-zero, the project lead may act as shepherd (a human has to guide the AEP and the agent
+   account has no decision rights) but cannot be the reviewer.
+4. **Roles per AEP.** Each AEP lists in its header the reviewer roles it needs. Roles used so far:
+
+   | Role | Needed for |
+   | --- | --- |
+   | Runtime implementer | Every `Specification` AEP: someone who builds or maintains an agent or workflow runtime other than OpenAgentix and can judge whether the text is implementable. |
+   | Security reviewer | AEPs that change permissions, isolation, digests, extensions or audit integrity. |
+   | Privacy reviewer | AEPs that change what audit events or handoffs contain or how long content is kept. |
+   | MCP practitioner | AEPs that touch MCP servers, tools or authorization: someone familiar with the Model Context Protocol specification. |
+   | Language or schema reviewer | AEPs that define a grammar or a JSON Schema subset. |
+
+   One person may cover several roles. Roles are filled by people who volunteer publicly; the
+   project does not name reviewers it has not asked and who have not agreed.
+5. **Finding reviewers.** Maintainers ask for reviewers in a pinned GitHub Discussion and in the
+   AEP's issue. Until a reviewer is found, the AEP stays in `Review`; an API version is not held
+   back by one AEP without a reviewer (the AEP moves to a later target version).
+6. **Record.** The AEP's `Decision` section names the shepherd, the reviewer(s) with their role,
+   the FCP dates and the outcome.
 
 ## 6. Versioning of the specification
 
@@ -203,6 +240,30 @@ version it was tested with (`testedWith`, [spec 11.3](../spec/v1alpha1/README.md
 
 ## 7. Conformance mark (proposal)
 
+### 7.0 Self-declared schema conformance during alpha
+
+Adopted with this process (decision log R1). It is not a mark and gives no right to a logo.
+
+1. An implementation MAY state "**AWP `<api version>` schema conformant (alpha)**" only when all of
+   the following hold, shown by a public CI run on the implementation's default branch:
+   - its validator gives the expected result (accept or reject, and the `path` for rejections) for
+     every case of the AWP conformance suite (`conformance/index.json`) of a named suite version,
+     for the profiles it names;
+   - every manifest it exports (a committed set of golden exports plus every shipped example that
+     it exports) is accepted by the reference checker of the same suite version with digest
+     verification enabled;
+   - the suite and schema it runs are an unmodified copy of a named commit or release of this
+     repository, verified by hash.
+2. The statement names the API version, the suite version, the profiles whose document rules were
+   checked, the date, a link to the CI run, and every limitation (for example "agents that use
+   conditions are not exported").
+3. The statement is about documents only. It MUST NOT be phrased as runtime conformance to a
+   profile (spec 11.1, 11.3) and MUST NOT imply a compliance property.
+4. Until rule 1 is met, the implementation describes itself as "**built to the AWP schema,
+   conformance in progress (alpha)**".
+5. A failing run on the default branch makes the statement invalid until the next passing run;
+   the implementation updates or removes the statement.
+
 **No conformance mark exists today. No implementation is certified, and none may claim a mark.**
 [GOVERNANCE.md](../GOVERNANCE.md#conformance-claims) allows only plain, accurate statements such as
 "conforms to AWP `v1alpha1` profiles core and audit", and only for profiles an implementation
@@ -272,7 +333,8 @@ separate decision of the project.
 
 1. Is 10 working days the right minimum FCP, given that GOVERNANCE.md asks for 5 working days for
    substantive changes?
-2. Should AEP numbers be assigned at `Draft` (proposed) or reuse the pull request number?
+2. ~~Should AEP numbers be assigned at `Draft` (proposed) or reuse the pull request number?~~
+   Decided 2026-10-10 (D1): numbers are assigned at `Draft`; 0001-0011 are kept.
 3. Should the alpha-to-beta promotion require two independent implementations of `core` only, or
    also of one further profile?
 4. Who runs a runtime conformance suite for implementations that are not open source, and how is

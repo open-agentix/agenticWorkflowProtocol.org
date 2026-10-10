@@ -44,10 +44,17 @@ that no single organization holds a majority of maintainers once the specificati
 - Editorial changes (typos, wording, examples): one maintainer approval.
 - Substantive changes (new fields, changed semantics, conformance requirements): an issue first,
   at least 5 working days of public discussion, then lazy consensus of the maintainers.
-- Larger changes will use **AWP Enhancement Proposals (AEPs)**: a numbered Markdown document in
+- **Alpha waiver.** While the project is in alpha and no third party depends on it, the project owner
+  may waive the 5-day discussion period for a specific change. Every waiver is recorded in the pull
+  request and in `docs/alignment/decisions.md`. A waiver never changes an AEP's lifecycle status: the
+  external review required by `docs/aep-process.md` still applies before an AEP is `Accepted`.
+- Larger changes use **AWP Enhancement Proposals (AEPs)**: a numbered Markdown document in
   `aep/` with motivation, specification text, alternatives, compatibility and conformance impact.
-  The AEP process is itself still a draft; a proposal is in [docs/aep-process.md](docs/aep-process.md)
-  with the template [aep/0000-template.md](aep/0000-template.md). It is not adopted yet.
+  The process is [docs/aep-process.md](docs/aep-process.md) with the template
+  [aep/0000-template.md](aep/0000-template.md), adopted on 2026-10-10
+  ([decision log](docs/alignment/decisions.md)). An AEP is never accepted by its author or by the
+  project lead alone: it needs a reviewer who is not an author and, while all maintainers belong to
+  one organisation, an external one ([aep-process 5.1](docs/aep-process.md#51-review-before-acceptance)).
 - If consensus cannot be reached, the maintainers decide by simple majority; the project lead
   breaks ties.
 
@@ -58,13 +65,19 @@ that no single organization holds a majority of maintainers once the specificati
   `v1` (stable, only backwards-compatible additions).
 - A published API version is never changed incompatibly. Incompatible changes require a new API
   version.
+- For document structure (field names, types, required fields, closed objects) the JSON Schema of
+  an API version is normative; the specification text is normative for semantics and runtime
+  behaviour. A discrepancy is a defect fixed by an erratum ([schema/README.md](schema/README.md)).
 - Repository releases (schemas, tooling, website) follow [SemVer 2.0.0](https://semver.org) and
   are documented in [CHANGELOG.md](CHANGELOG.md).
 
 ## Conformance claims
 
 An implementation may state that it conforms to AWP only for the profiles and API version it
-actually implements, for example "conforms to AWP `v1alpha1` profiles core and audit". Rules for a
+actually implements, for example "conforms to AWP `v1alpha1` profiles core and audit". During
+alpha, a statement about documents only ("AWP `v1alpha1` schema conformant (alpha)") needs a
+passing public CI run of the conformance suite against the implementation's validator and real
+exports ([aep-process 7.0](docs/aep-process.md#70-self-declared-schema-conformance-during-alpha)). Rules for a
 formal conformance mark (test suite, self-certification, revocation) will be defined together with
 the conformance test suite.
 

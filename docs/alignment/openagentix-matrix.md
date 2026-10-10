@@ -7,7 +7,7 @@
 | **OpenAgentix syntax** | `agents.md`, `apiVersion: openagentix.io/v1alpha1` |
 | **Source revision read** | open-agentix `main` at commit `245fbc6` (2026-10-09): `packages/core/src/agents/{schema,parser,validate,when}.ts`, `packages/core/src/policy/engine.ts`, `packages/runners/src/executor.ts`, `packages/core/src/control/controller.ts`, `packages/events/src/cron.ts`, `apps/api/src/services/control-plane.ts`, `packages/core/src/canonical.ts`, `docs/agents-md.md`, `docs/mcp.md`, `docs/providers.md`, `docs/budgets.md`, `docs/harnesses.md`, `docs/runners.md`, `examples/` |
 | **Previous version** | [docs/mapping-agents-md.md](../mapping-agents-md.md) (v1, revision `57775e2`) |
-| **Related** | [x-openagentix extension namespace](x-openagentix-extensions.md), [single source of truth](single-source-of-truth.md), [phased plan and owner decisions](plan.md), AEP drafts [0001](../../aep/0001-conditional-steps.md) to [0011](../../aep/0011-required-extensions.md) |
+| **Related** | [x-openagentix extension namespace](x-openagentix-extensions.md), [single source of truth](single-source-of-truth.md), [phased plan](plan.md), [decision log](decisions.md), AEPs (in review) [0001](../../aep/0001-conditional-steps.md) to [0011](../../aep/0011-required-extensions.md) |
 
 > **Conformance status.** OpenAgentix is **not** conformant to AWP `v1alpha1`. It implements no
 > AWP conformance profile, it does not read AWP manifests today, and it has published no
@@ -37,7 +37,7 @@ The OpenAgentix project decided (2026-10-09) that OpenAgentix will use the AWP m
 manifest, plus OpenAgentix extension fields named `x-openagentix-*`
 ([namespace description](x-openagentix-extensions.md)). Both formats are alpha, so gaps found here
 are proposed as changes to AWP through the AEP process ([docs/aep-process.md](../aep-process.md),
-draft), not added as private fields where they would weaken governance.
+adopted 2026-10-10), not added as private fields where they would weaken governance.
 
 This is a decision of the OpenAgentix project about its own syntax. AWP stays vendor neutral: the
 proposals in `aep/` are written for any runtime, OpenAgentix has no veto and no fast track

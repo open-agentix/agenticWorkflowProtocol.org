@@ -2,12 +2,14 @@
 
 | | |
 | --- | --- |
-| **AEP** | 0011 (proposed; numbered in pull request order, pending maintainer assignment) |
+| **AEP** | 0011 |
 | **Title** | Required extensions (`metadata.requiredExtensions`) |
 | **Authors** | @agentix-zero |
-| **Shepherd** | to be assigned |
+| **Shepherd** | Project lead (proposed; not an author, [aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)) |
 | **Type** | Specification |
-| **Status** | Draft |
+| **Status** | Review (proposed for `v1alpha2`; not accepted) |
+| **Reviewer roles needed** | runtime implementer, security reviewer. None identified yet; an external review is required before `Accepted` ([aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)). |
+| **Owner decisions** | [D3](../docs/alignment/decisions.md#d3-required-extensions-are-a-prerequisite-of-strategy-a) (2026-10-10) |
 | **Target API version** | `v1alpha2` |
 | **Profiles affected** | `core` |
 | **Created** | 2026-10-09 |
@@ -148,13 +150,18 @@ enforce their own compliance requirements. This proposal makes no compliance pro
 
 ## Implementation status
 
-No implementation of this AEP exists. The OpenAgentix alignment proposes to list its critical
-`x-openagentix-*` fields here ([namespace](../docs/alignment/x-openagentix-extensions.md)).
+No implementation of this AEP exists. By owner decision D3, OpenAgentix will list its critical
+`x-openagentix-*` fields here and will not export manifests with critical extensions before this AEP
+is part of an API version it targets ([namespace](../docs/alignment/x-openagentix-extensions.md)).
 
 ## Open questions
 
 1. Should required extensions be declarable per object instead of per manifest?
 2. Should a conformance statement list the extensions an implementation enforces?
+
+## Decision
+
+Owner direction of 2026-10-10 (D3): a prerequisite of strategy A. Target `v1alpha2`. Not accepted; needs the reviews listed in the header ([aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)).
 
 ## References
 

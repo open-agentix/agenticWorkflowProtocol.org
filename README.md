@@ -72,7 +72,7 @@ applicable regulatory requirements.
 
 | Implementation | Status |
 | -------------- | ------ |
-| [OpenAgentix](https://github.com/open-agentix/open-agentix) | Reference implementation, **in progress** (not yet conformant) |
+| [OpenAgentix](https://github.com/open-agentix/open-agentix) | Reference implementation: **built to the AWP schema, conformance in progress (alpha)**; not conformant to any profile |
 
 **Call for implementations:** AWP is not tied to OpenAgentix. If you build a runtime, validator or
 tool that implements AWP, open an issue or pull request to be listed here. Listing requires a

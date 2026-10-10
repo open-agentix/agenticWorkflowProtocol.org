@@ -23,7 +23,7 @@ AWP is a specification, not a platform. OpenAgentix is one implementation effort
 others and has no special status in the specification process ([GOVERNANCE.md](../GOVERNANCE.md)).
 This document exists because OpenAgentix is the first project that intends to implement AWP, and a
 precise mapping shows where the specification and an existing syntax disagree. Findings that point
-at gaps in AWP are input for future AWP Enhancement Proposals ([AEP process draft](aep-process.md)),
+at gaps in AWP are input for future AWP Enhancement Proposals ([AEP process](aep-process.md), adopted 2026-10-10),
 not commitments.
 
 ## Contents

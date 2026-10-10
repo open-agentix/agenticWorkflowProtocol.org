@@ -9,9 +9,11 @@ AWP is a specification, not a platform. OpenAgentix is one implementation.
 
 | Implementation | Status |
 | -------------- | ------ |
-| [OpenAgentix](https://github.com/open-agentix/open-agentix) | Reference implementation, **in progress**. Not yet conformant to any profile. [Status and mapping](/implementations/openagentix/). |
+| [OpenAgentix](https://github.com/open-agentix/open-agentix) | Reference implementation. **Built to the AWP schema, conformance in progress (alpha).** Not conformant to any profile. [Status and mapping](/implementations/openagentix/). |
 
 No other implementation is listed. This list changes only when a project states its support publicly.
+
+Implementations that use their own extension fields can list their prefix in the informative [extension prefix list](https://github.com/open-agentix/agenticWorkflowProtocol.org/blob/main/docs/registry/extension-prefixes.md).
 
 ## Call for implementations
 
