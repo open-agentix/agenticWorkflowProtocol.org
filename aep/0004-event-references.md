@@ -2,12 +2,14 @@
 
 | | |
 | --- | --- |
-| **AEP** | 0004 (proposed; numbered in pull request order, pending maintainer assignment) |
+| **AEP** | 0004 |
 | **Title** | Event references (`${{ event.* }}`) |
 | **Authors** | @agentix-zero |
-| **Shepherd** | to be assigned |
+| **Shepherd** | Project lead (proposed; not an author, [aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)) |
 | **Type** | Specification |
-| **Status** | Draft |
+| **Status** | Review (proposed for `v1alpha2`; not accepted) |
+| **Reviewer roles needed** | runtime implementer, security reviewer, privacy reviewer. None identified yet; an external review is required before `Accepted` ([aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)). |
+| **Owner decisions** | [D7](../docs/alignment/decisions.md#d7-own-event-root) (2026-10-10) |
 | **Target API version** | `v1alpha2` |
 | **Profiles affected** | `core` |
 | **Created** | 2026-10-09 |
@@ -120,7 +122,7 @@ enforce their own compliance requirements. This proposal makes no compliance pro
 
 ## Alternatives
 
-- **Always map events to inputs**: works, but loses the distinction between operator-provided and
+- **Always map events to inputs** (rejected by owner decision D7): works, but loses the distinction between operator-provided and
   externally-provided values, and needs a naming convention per runtime.
 - **Expose the raw transport envelope** (headers, signatures): implementation-specific; rejected.
 
@@ -133,6 +135,10 @@ in its own format. No implementation of this AEP exists.
 
 1. Should `event.time` be the event's own timestamp or the receipt time?
 2. Should `dataSchema` be REQUIRED under the security profile?
+
+## Decision
+
+Owner direction of 2026-10-10 (D7): an own root `${{ event.* }}`; events are not mapped to inputs. Target `v1alpha2`. Not accepted; needs the reviews listed in the header ([aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)).
 
 ## References
 

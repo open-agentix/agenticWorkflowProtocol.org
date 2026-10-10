@@ -2,13 +2,15 @@
 
 | | |
 | --- | --- |
-| **AEP** | 0009 (proposed; numbered in pull request order, pending maintainer assignment) |
+| **AEP** | 0009 |
 | **Title** | Audit payload levels and content retention |
 | **Authors** | @agentix-zero |
-| **Shepherd** | to be assigned |
+| **Shepherd** | Project lead (proposed; not an author, [aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)) |
 | **Type** | Specification |
-| **Status** | Draft |
-| **Target API version** | `v1alpha3` (owner decision) |
+| **Status** | Review (proposed for `v1alpha3`; not accepted) |
+| **Reviewer roles needed** | runtime implementer, privacy reviewer, security reviewer. None identified yet; an external review is required before `Accepted` ([aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)). |
+| **Owner decisions** | [D11](../docs/alignment/decisions.md#d11-contentretention-is-mandatory-with-a-documented-default) (2026-10-10) |
+| **Target API version** | `v1alpha3` |
 | **Profiles affected** | `audit` |
 | **Created** | 2026-10-09 |
 | **Discussion** | issue to be opened |
@@ -47,8 +49,8 @@ can be erased without breaking the integrity chain.
 
 | Field | Type | Description |
 | ----- | ---- | ----------- |
-| `payload` | string | `metadata` (default), `redacted` or `content`. `full` is accepted as a deprecated alias of `content` in `v1alpha2` and removed later. |
-| `contentRetention` | duration | REQUIRED when `payload` is not `metadata`. Maximum time content is kept. |
+| `payload` | string | `metadata` (default), `redacted` or `content`. `full` is accepted as a deprecated alias of `content` in `v1alpha3` and removed later. |
+| `contentRetention` | duration | REQUIRED when `payload` is not `metadata`. Maximum time content is kept. Documented default: `7d` (see below). |
 | `maxContentClassification` | string | Highest data class whose content may be recorded. Content of operations with a higher class is recorded as `metadata`. Default: `internal`. |
 | `retention.duration` | duration | Unchanged: minimum retention of the events (metadata). |
 
@@ -59,6 +61,13 @@ Levels:
 | `metadata` | Identifiers, digests, decisions, sizes, counts, error codes. No content of inputs, outputs, prompts, tool arguments or tool results. |
 | `redacted` | As `metadata`, plus the structure (keys, types, lengths) and values that are neither secrets nor classified above `public`. |
 | `content` | As `redacted`, plus all values up to `maxContentClassification`. Secrets are always redacted (spec 7.9). |
+
+Default for `contentRetention`: the field has no implicit value. Its documented default is `7d`:
+authoring tools, converters and exporters MUST write `contentRetention: 7d` into the manifest when
+content capture is enabled and the author has not chosen a value, and MUST show the value to the
+author. Validators MUST reject a manifest with `payload` other than `metadata` and without
+`contentRetention`; runtimes MUST NOT assume a value. The value is thus part of the reviewed and
+digested manifest.
 
 Rules:
 
@@ -126,8 +135,9 @@ enforce their own compliance requirements. This proposal makes no compliance pro
 - **Keep `full` and one retention**: conflicts described above.
 - **Encrypt content inside the event**: erasure by key deletion works, but the chain then covers
   ciphertext whose key may be lost; separation with salted digests is simpler to verify.
-- **No default retention** for content versus a fixed default: proposed here as REQUIRED, so the
-  manifest author decides explicitly (owner decision 11).
+- **Implicit runtime default** for content retention: rejected by owner decision D11 in favour of
+  a mandatory field with a documented default (`7d`) that tools write explicitly.
+- **No documented default**: leaves every tool to pick its own value; rejected (D11).
 
 ## Implementation status
 
@@ -139,6 +149,10 @@ audit format. No implementation of this AEP exists.
 
 1. Should `redacted` be defined more precisely (which values count as non-sensitive)?
 2. Should approval requests (spec 7.6) follow the same levels?
+
+## Decision
+
+Owner direction of 2026-10-10 (D11): `contentRetention` is mandatory when content capture is used, with the documented default `7d` that tools write explicitly ([conflict C4](../docs/alignment/decisions.md#c4-mandatory-field-with-a-default-value)). Not in the `v1alpha2` scope of D8; target `v1alpha3` ([conflict C3](../docs/alignment/decisions.md#c3-d10-and-d11-decide-details-but-not-the-target-version)). Not accepted; needs the reviews listed in the header ([aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)).
 
 ## References
 

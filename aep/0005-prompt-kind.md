@@ -2,13 +2,15 @@
 
 | | |
 | --- | --- |
-| **AEP** | 0005 (proposed; numbered in pull request order, pending maintainer assignment) |
+| **AEP** | 0005 |
 | **Title** | Kind `Prompt`: versioned prompt templates |
 | **Authors** | @agentix-zero |
-| **Shepherd** | to be assigned |
+| **Shepherd** | Project lead (proposed; not an author, [aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)) |
 | **Type** | Specification |
-| **Status** | Draft |
-| **Target API version** | `v1alpha2` or later (owner decision) |
+| **Status** | Review (proposed for `v1alpha2`; not accepted) |
+| **Reviewer roles needed** | runtime implementer, security reviewer. None identified yet; an external review is required before `Accepted` ([aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)). |
+| **Owner decisions** | [D8](../docs/alignment/decisions.md#d8-and-question-17-prompt-and-playbook-are-in-v1alpha2) (2026-10-10) |
+| **Target API version** | `v1alpha2` |
 | **Profiles affected** | `core`, `audit` (reproducibility record), `security` (digests, provenance) |
 | **Created** | 2026-10-09 |
 | **Discussion** | issue to be opened |
@@ -170,6 +172,10 @@ inline in its `agents.md` sections and has no prompt registry.
 
 1. Should a `Prompt` support several messages (system plus few-shot examples)?
 2. Should `outputSchema` automatically become the step output schema?
+
+## Decision
+
+Owner direction of 2026-10-10 (D8): the kind `Prompt` is in `v1alpha2`. It depends on AEP-0003 (schema subset) and AEP-0010 (digests, JCS rendering of values), both also in `v1alpha2`. Not accepted; needs the reviews listed in the header ([aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)).
 
 ## References
 

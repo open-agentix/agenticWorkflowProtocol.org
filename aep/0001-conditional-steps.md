@@ -2,12 +2,14 @@
 
 | | |
 | --- | --- |
-| **AEP** | 0001 (proposed; numbered in pull request order, pending maintainer assignment) |
+| **AEP** | 0001 |
 | **Title** | Conditional steps (`when`) with a restricted expression language |
 | **Authors** | @agentix-zero |
-| **Shepherd** | to be assigned |
+| **Shepherd** | Project lead (proposed; not an author, [aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)) |
 | **Type** | Specification |
-| **Status** | Draft |
+| **Status** | Review (proposed for `v1alpha2`; not accepted) |
+| **Reviewer roles needed** | runtime implementer, language or schema reviewer, security reviewer. None identified yet; an external review is required before `Accepted` ([aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)). |
+| **Owner decisions** | [D5](../docs/alignment/decisions.md#d5-when-uses-the-openagentix-expression-grammar), [D6](../docs/alignment/decisions.md#d6-executions-may-succeed-with-condition-skips) (2026-10-10) |
 | **Target API version** | `v1alpha2` |
 | **Profiles affected** | `core` (step semantics), `audit` (new event type) |
 | **Created** | 2026-10-09 |
@@ -202,7 +204,7 @@ enforce their own compliance requirements. This proposal makes no compliance pro
 
 ## Alternatives
 
-- **CEL (Common Expression Language) subset**: well specified, but a large surface with functions,
+- **CEL (Common Expression Language) subset** (rejected by owner decision D5): well specified, but a large surface with functions,
   macros and implementation-specific extensions; a subset would need its own definition anyway.
 - **JSONPath / JMESPath filters**: query languages with functions; harder to bound.
 - **`${{ }}` wrapping**: would mix interpolation and conditions in one syntax; rejected so that
@@ -220,6 +222,10 @@ roots (`event`, `steps.<id>.output`) in its `agents.md` format. No implementatio
 2. Is `execution.environment` enough, or are trigger attributes (`trigger.type`) needed?
 3. Should a step be able to opt into running after a failed dependency (`runAfterFailure`)? Not
    proposed here.
+
+## Decision
+
+Owner direction of 2026-10-10: the grammar is based on the existing OpenAgentix expression grammar, not CEL (D5); an execution may succeed when steps are skipped by a condition (D6). Target `v1alpha2`. Not accepted; needs the reviews listed in the header ([aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)).
 
 ## References
 
