@@ -97,6 +97,12 @@ Sections, notes and examples marked as *non-normative* do not contain requiremen
 examples in this document and in [examples/](examples/) are non-normative, but they are intended
 to be valid against the rules of this document; a discrepancy is a defect of the example.
 
+The JSON Schema of this API version ([schema/awp.v1alpha1.json](../../schema/awp.v1alpha1.json)) is
+normative for document structure (field names, types, required fields, closed objects,
+enumerations and patterns). This document is normative for semantics and runtime behaviour. A
+discrepancy between the two is a defect that is corrected by an erratum; until then, validators
+follow the schema for structure.
+
 Terms such as *manifest*, *runtime*, *execution*, *step*, *action* and *actor* are defined in the
 [glossary](glossary.md).
 
