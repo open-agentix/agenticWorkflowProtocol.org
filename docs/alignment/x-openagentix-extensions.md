@@ -1,8 +1,8 @@
-# The `x-openagentix-*` extension namespace (proposal)
+# The `x-openagentix-*` extension namespace
 
 | | |
 | --- | --- |
-| **Status** | Draft proposal, informative for AWP. Not adopted by AWP or OpenAgentix. |
+| **Status** | Informative for AWP. Directions decided on 2026-10-10 ([decision log](decisions.md): D3 required extensions, D12 neutral prefix list, D13 transition). The prefix is listed in the neutral [extension prefix list](../registry/extension-prefixes.md); this field-level description moves to the OpenAgentix repository with its extension schema. |
 | **Applies to** | AWP `v1alpha1` manifests written by OpenAgentix (`agents.md` front matter under strategy A) |
 | **AWP rules used** | Extension fields ([spec 3.3](../../spec/v1alpha1/README.md#33-unknown-fields-and-extensions)), digest ([spec 9.1](../../spec/v1alpha1/README.md#91-manifest-digest)) |
 | **Related** | [Alignment matrix v2](openagentix-matrix.md), [AEP-0011 required extensions](../../aep/0011-required-extensions.md) |
@@ -10,8 +10,8 @@
 > AWP is vendor neutral. This page describes how **one** implementation (OpenAgentix, in progress,
 > not conformant) intends to use the generic `x-` mechanism that every implementation has. It
 > creates no AWP requirement and gives OpenAgentix no special status. Any other implementation can
-> document its own prefix the same way; owner decision 12 in the [plan](plan.md#5-decisions-for-the-owner)
-> asks whether AWP should keep an open, informative list of such prefixes.
+> document its own prefix the same way and list it in the neutral, informative
+> [extension prefix list](../registry/extension-prefixes.md) (decision D12).
 
 ## 1. Goals
 
@@ -105,10 +105,13 @@ manifest. Proposed rules, to be specified in the OpenAgentix repository:
 4. Title, overview and other sections are documentation. They are not part of the effective
    manifest; OpenAgentix keeps its source digest (SHA-256 of the normalised file) as a second,
    implementation-specific identifier and does not write it into the file.
-5. A file with `apiVersion: openagentix.io/v1alpha1` remains readable during a transition period
-   (owner decision 13): OpenAgentix converts it into an effective AWP manifest with the converter
+5. A file with `apiVersion: openagentix.io/v1alpha1` remains readable for one OpenAgentix minor
+   release after the first release that writes AWP manifests, with a deprecation warning on every
+   read; the next minor release rejects it ([decision D13](decisions.md#d13-transition-for-openagentixiov1alpha1-files-rule-chosen-by-the-agent-as-delegated)).
+   During the transition OpenAgentix converts it into an effective AWP manifest with the converter
    rules of the [matrix](openagentix-matrix.md#4-field-by-field-matrix) and refuses the conversion
-   when a critical finding cannot be carried.
+   when a critical finding cannot be carried. Published legacy versions are converted once and
+   stored next to their unchanged source.
 
 ## 5. Lifecycle
 
