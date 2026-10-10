@@ -6,8 +6,14 @@ API version `awp.agenticworkflowprotocol.org/v1alpha1`. It expresses the **struc
 as **semantic validation rules**; a validator that claims to accept exactly the manifests the
 specification allows (spec section 11.1) must implement both layers.
 
-The schema is a development aid and part of the conformance material. The normative text is the
-specification; on a discrepancy the specification wins and the schema is defective.
+**The schema is normative for document structure**: field names, types, required fields, closed
+objects, enumerations and patterns (decided 2026-10-10, [decision log D2](../docs/alignment/decisions.md#d2-json-schema-is-normative-for-structure)).
+Whether a manifest is written as YAML or JSON does not matter; YAML is parsed into the JSON data
+model first. The specification text is normative for semantics and runtime behaviour, and the
+semantic rules below are normative where they cite a section of it. A discrepancy between schema
+and text is a defect that is fixed by an erratum in whichever artefact is wrong; until it is fixed,
+validators follow the schema for structure. Implementations derive their types and validators
+from the schema, not the other way round.
 
 ## Use
 

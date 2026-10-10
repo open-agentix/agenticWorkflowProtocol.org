@@ -2,12 +2,14 @@
 
 | | |
 | --- | --- |
-| **AEP** | 0003 (proposed; numbered in pull request order, pending maintainer assignment) |
+| **AEP** | 0003 |
 | **Title** | Typed handoffs between steps |
 | **Authors** | @agentix-zero |
-| **Shepherd** | to be assigned |
+| **Shepherd** | Project lead (proposed; not an author, [aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)) |
 | **Type** | Specification |
-| **Status** | Draft |
+| **Status** | Review (proposed for `v1alpha2`; not accepted) |
+| **Reviewer roles needed** | runtime implementer, language or schema reviewer, security reviewer, privacy reviewer. None identified yet; an external review is required before `Accepted` ([aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)). |
+| **Owner decisions** | scope of `v1alpha2` ([decision log section 2](../docs/alignment/decisions.md#2-resulting-scope-of-v1alpha2)) (2026-10-10) |
 | **Target API version** | `v1alpha2` |
 | **Profiles affected** | `core`, `audit` |
 | **Created** | 2026-10-09 |
@@ -190,6 +192,10 @@ implementation of this AEP exists.
 1. Should output schemas be allowed on command steps (stdout parsed as JSON)?
 2. Should the `input.schema` without `from` exist at all, or require `from`?
 3. Should `spec.schemas` be shareable across manifests (a `Schema` kind) later?
+
+## Decision
+
+Owner direction of 2026-10-10: part of the `v1alpha2` scope ([decision log section 2](../docs/alignment/decisions.md#2-resulting-scope-of-v1alpha2)); the `event` source follows D7 (AEP-0004). Not accepted; needs the reviews listed in the header ([aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)).
 
 ## References
 

@@ -2,12 +2,14 @@
 
 | | |
 | --- | --- |
-| **AEP** | 0002 (proposed; numbered in pull request order, pending maintainer assignment) |
+| **AEP** | 0002 |
 | **Title** | Argument constraints and call limits in tool permissions; action groups instead of prefix wildcards |
 | **Authors** | @agentix-zero |
-| **Shepherd** | to be assigned |
+| **Shepherd** | Project lead (proposed; not an author, [aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)) |
 | **Type** | Specification |
-| **Status** | Draft |
+| **Status** | Review (proposed for `v1alpha2`; not accepted) |
+| **Reviewer roles needed** | runtime implementer, security reviewer, language or schema reviewer. None identified yet; an external review is required before `Accepted` ([aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)). |
+| **Owner decisions** | [D4](../docs/alignment/decisions.md#d4-no-prefix-wildcards-in-permissions) (2026-10-10) |
 | **Target API version** | `v1alpha2` |
 | **Profiles affected** | `core` |
 | **Created** | 2026-10-09 |
@@ -95,12 +97,13 @@ denied actions do not count. When the limit is reached, further matching actions
 with `reason: budget`. `maxCalls` is
 independent of `budget.resources.maxToolCalls`; both apply.
 
-### Changes to section 5.5.3 (wildcards): decision
+### Changes to section 5.5.3 (wildcards): decision (confirmed by owner decision D4)
 
 The existing rule stays: a wildcard is only a final segment `*` (`github.*`). **Prefix wildcards
 inside a segment (`jira.get_*`) are not added.** Families of tools are granted through action
 groups (section 5.5.4). Runtimes MAY offer authoring helpers that expand a pattern into an explicit
-group at publish time; the published manifest contains the expanded list.
+group at publish time; the published manifest contains the expanded list. With an MCP catalog
+(AEP-0007), each catalog profile is such an enumerated group of reviewed tools.
 
 Justification:
 
@@ -201,6 +204,10 @@ flag and per-tool call limits in its own format. No implementation of this AEP e
 1. Should `deny` patterns stay, or move to `Policy` conditions only?
 2. Should `maxCalls` count per step instead of per execution, or offer both?
 3. Nested argument paths (`args."options.force"`): needed, or handled by AEP-0003 schemas?
+
+## Decision
+
+Owner direction of 2026-10-10 (D4): no prefix wildcards inside a segment; families of tools are granted through action groups and publish-time enumeration. Target `v1alpha2`. Not accepted; needs the reviews listed in the header ([aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)).
 
 ## References
 

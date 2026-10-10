@@ -1,7 +1,7 @@
 # AEP-0000: Title of the proposal
 
 <!--
-Template for AWP Enhancement Proposals. The process is proposed in docs/aep-process.md (draft).
+Template for AWP Enhancement Proposals. The process is docs/aep-process.md (adopted 2026-10-10).
 Copy this file to aep/0000-short-title.md; a maintainer assigns the number.
 Write in English. Use the key words MUST, SHOULD and MAY (BCP 14) only in normative text.
 No secrets, no real personal data in examples (use example.com / example.org).
@@ -15,6 +15,8 @@ No secrets, no real personal data in examples (use example.com / example.org).
 | **Shepherd** | Maintainer GitHub handle (assigned) |
 | **Type** | Specification / Process / Informational |
 | **Status** | Draft |
+| **Reviewer roles needed** | Roles of [aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance), for example runtime implementer, security reviewer |
+| **Reviewers** | Names or handles of people who agreed to review, with their role (filled in during `Review`) |
 | **Target API version** | for example `v1alpha2` (Specification AEPs only) |
 | **Profiles affected** | `core`, `governance`, `audit`, `security`, `mcp`, `a2a` or none |
 | **Created** | YYYY-MM-DD |
@@ -104,5 +106,10 @@ Known implementation work, stated factually. Do not state that a platform suppor
 proposal unless that project has said so publicly.
 
 ## Open questions
+
+## Decision
+
+Filled in at each status change: shepherd, reviewers and their roles, FCP dates, outcome and
+reason ([aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)).
 
 ## References

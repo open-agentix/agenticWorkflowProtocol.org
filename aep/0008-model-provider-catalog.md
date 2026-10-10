@@ -2,13 +2,15 @@
 
 | | |
 | --- | --- |
-| **AEP** | 0008 (proposed; numbered in pull request order, pending maintainer assignment) |
+| **AEP** | 0008 |
 | **Title** | Model and provider catalog as policy input |
 | **Authors** | @agentix-zero |
-| **Shepherd** | to be assigned |
+| **Shepherd** | Project lead (proposed; not an author, [aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)) |
 | **Type** | Specification |
-| **Status** | Draft |
-| **Target API version** | `v1alpha3` (owner decision) |
+| **Status** | Review (proposed for `v1alpha3`; not accepted) |
+| **Reviewer roles needed** | runtime implementer, security reviewer. None identified yet; an external review is required before `Accepted` ([aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)). |
+| **Owner decisions** | [D10](../docs/alignment/decisions.md#d10-model-catalog-prices-in-an-own-kind-referenced-by-digest) (2026-10-10) |
+| **Target API version** | `v1alpha3` |
 | **Profiles affected** | `governance`, `audit` |
 | **Created** | 2026-10-09 |
 | **Discussion** | issue to be opened |
@@ -19,7 +21,7 @@
 
 Define a kind `ModelCatalog` that lists allowed providers and models with region, prices,
 governance status and optional aliases, referenced from a workflow (`spec.modelPolicy.catalog`) by
-name, version and digest. The catalog becomes an input of model policy, data residency and budget
+name, version and a required digest. The catalog becomes an input of model policy, data residency and budget
 checks; it replaces per-runtime lookup tables that differ between runtimes.
 
 ## Motivation
@@ -76,7 +78,11 @@ Model entry:
 
 | Field | Type | Description |
 | ----- | ---- | ----------- |
-| `catalog` | object | `name`, `version` (exact), `digest` (OPTIONAL) of a `ModelCatalog`. |
+| `catalog` | object | `name`, `version` (exact) and `digest` (REQUIRED, spec 3.8, AEP-0010) of a `ModelCatalog`. |
+
+The runtime MUST resolve the catalog by name and version and MUST verify its digest; on a mismatch
+or when the catalog cannot be resolved, the execution MUST NOT start. Prices, regions and approvals
+therefore always come from exactly the catalog the workflow was reviewed with.
 
 Rules when `modelPolicy.catalog` is set:
 
@@ -121,7 +127,10 @@ spec:
 
 ```yaml
 modelPolicy:
-  catalog: { name: eu-models, version: 2026.10.0 }
+  catalog:
+    name: eu-models
+    version: 2026.10.0
+    digest: sha256:0000000000000000000000000000000000000000000000000000000000000000
   requirements:
     approvalStatus: approved
 dataPolicy:
@@ -166,7 +175,8 @@ enforce their own compliance requirements. This proposal makes no compliance pro
 ## Alternatives
 
 - **Prices inline in every model object**: duplicated and stale quickly.
-- **Runtime-only catalogs**: keeps the status quo of non-portable decisions (owner decision 10).
+- **Runtime-only catalogs**: keeps the status quo of non-portable decisions (rejected by owner
+  decision D10).
 - **A registry of well-known provider identifiers maintained by AWP**: useful as informative
   guidance, but cannot cover tenant-specific deployments; could complement this AEP.
 
@@ -180,6 +190,10 @@ implementation of this AEP exists.
 
 1. CalVer versions (`2026.10.0`) are valid SemVer; should catalogs recommend them?
 2. Should price units include per-request or per-image prices?
+
+## Decision
+
+Owner direction of 2026-10-10 (D10): prices live in an own kind `ModelCatalog` that workflows reference by digest (the digest is therefore REQUIRED). Not in the `v1alpha2` scope of D8; target `v1alpha3` ([conflict C3](../docs/alignment/decisions.md#c3-d10-and-d11-decide-details-but-not-the-target-version)). Not accepted; needs the reviews listed in the header ([aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)).
 
 ## References
 

@@ -2,13 +2,15 @@
 
 | | |
 | --- | --- |
-| **AEP** | 0006 (proposed; numbered in pull request order, pending maintainer assignment) |
+| **AEP** | 0006 |
 | **Title** | Kind `Playbook`: recurring tasks with deterministic steps and checks |
 | **Authors** | @agentix-zero |
-| **Shepherd** | to be assigned |
+| **Shepherd** | Project lead (proposed; not an author, [aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)) |
 | **Type** | Specification |
-| **Status** | Draft |
-| **Target API version** | `v1alpha3` or later (owner decision) |
+| **Status** | Review (proposed for `v1alpha2`; not accepted) |
+| **Reviewer roles needed** | runtime implementer, security reviewer. None identified yet; an external review is required before `Accepted` ([aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)). |
+| **Owner decisions** | [D8](../docs/alignment/decisions.md#d8-and-question-17-prompt-and-playbook-are-in-v1alpha2) (2026-10-10) |
+| **Target API version** | `v1alpha2` |
 | **Profiles affected** | `core`, `audit` |
 | **Created** | 2026-10-09 |
 | **Discussion** | issue to be opened |
@@ -96,7 +98,7 @@ name, version and digest.
 ## Examples
 
 ```yaml
-apiVersion: awp.agenticworkflowprotocol.org/v1alpha3
+apiVersion: awp.agenticworkflowprotocol.org/v1alpha2
 kind: Playbook
 metadata:
   name: bump-patch-dependency
@@ -170,7 +172,8 @@ workflow:
 
 ## Compatibility and migration
 
-Additive. Depends on AEP-0001 (conditions in checks) and AEP-0003 (schemas).
+Additive. Depends on AEP-0001 (conditions in checks), AEP-0003 (schemas) and AEP-0010 (digests), all in
+`v1alpha2`. If one of them moves to a later version, this AEP moves with it.
 
 ## Security considerations
 
@@ -206,6 +209,10 @@ guidelines and toolbox images, which are related but not the same concept.
 1. Name: `Playbook`, `Skill` or `Procedure`?
 2. Should checks be allowed to run between steps (preconditions)?
 3. Should a playbook be runnable on its own (as a one-step workflow, like `Agent`)?
+
+## Decision
+
+Owner direction of 2026-10-10 (D8): the kind `Playbook` is in `v1alpha2` (previously proposed for `v1alpha3` or later). Not accepted; needs the reviews listed in the header ([aep-process 5.1](../docs/aep-process.md#51-review-before-acceptance)).
 
 ## References
 

@@ -1,8 +1,8 @@
-# Single source of truth: AWP schema, OpenAgentix pin, drift test and conformance CI (proposal)
+# Single source of truth: AWP schema, OpenAgentix pin, drift test and conformance CI
 
 | | |
 | --- | --- |
-| **Status** | Draft proposal. Nothing here is implemented in the OpenAgentix repository. |
+| **Status** | Directions decided on 2026-10-10 ([decision log](decisions.md): D2 schema normative for structure, D14 vendored copy with `PROVENANCE.json`, R1 conformance wording). Nothing here is implemented in the OpenAgentix repository yet; the work is tracked as OpenAgentix issues with the label `awp`. |
 | **Scope** | How the AWP JSON Schema and conformance suite become the one definition of the manifest format that OpenAgentix (strategy A) builds on, and how drift is detected |
 | **Related** | [Alignment matrix v2](openagentix-matrix.md), [x-openagentix namespace](x-openagentix-extensions.md), [plan](plan.md) |
 
@@ -15,15 +15,14 @@
 
 | Artefact | Role | Owner |
 | --- | --- | --- |
-| `schema/awp.<version>.json` (this repository) | **Normative definition of the manifest structure** of an API version (proposed, owner decision 2) | AWP maintainers |
+| `schema/awp.<version>.json` (this repository) | **Normative definition of the manifest structure** of an API version (decision D2) | AWP maintainers |
 | `spec/<version>/README.md` | Normative semantics and runtime requirements; the semantic rules catalogue in `schema/README.md` lists what the schema cannot express | AWP maintainers |
 | `conformance/` (index, cases, reference checker) | Executable definition of "valid manifest" for validators | AWP maintainers |
 | OpenAgentix types and validator for manifests | **Derived** from the pinned schema; never edited by hand to add or remove AWP fields | OpenAgentix |
 | `openagentix-extensions.<version>.json` | Schema of the `x-openagentix-*` fields only | OpenAgentix |
 
-Today `schema/README.md` says that the specification text wins over the schema on a discrepancy.
-Making the schema normative for structure needs an explicit decision and, under the draft AEP
-process, a `Process` AEP. Proposed wording for that AEP: "For document structure (field names,
+Decision D2 made the schema normative for structure; `schema/README.md` and section 2 of the
+specification state it. The wording used: "For document structure (field names,
 types, required fields, closed objects), the JSON Schema of an API version is normative. The
 specification text is normative for semantics and runtime behaviour. A discrepancy between the two
 is a defect that is fixed by an erratum in whichever artefact is wrong; until it is fixed,
@@ -44,7 +43,7 @@ For every repository release `vX.Y.Z` that contains a draft or published API ver
 
 ## 3. Pinning in OpenAgentix
 
-Recommended: a **vendored, reviewed copy** (owner decision 14), consistent with the rule that
+Decided: a **vendored, reviewed copy** (decision D14), consistent with the rule that
 nothing is loaded from the internet at build or run time.
 
 ```
@@ -108,9 +107,12 @@ the vendored schema in OpenAgentix is not allowed; step 3 enforces it.
 
 ## 6. Status reporting
 
-- Until a public conformance suite run passes for a profile and the OpenAgentix maintainers publish
-  a conformance statement with all limitations, OpenAgentix documentation, websites, release notes
-  and announcements describe AWP support as "in progress" and name no profile as supported.
+- Until the AWP conformance suite passes against OpenAgentix's validator and real exports in
+  OpenAgentix's public CI (steps 6-8), OpenAgentix documentation, websites, release notes and
+  announcements say "built to the AWP schema, conformance in progress (alpha)" and name no profile
+  as supported. After that, they may say "AWP `<version>` schema conformant (alpha)" with the
+  details of [aep-process 7.0](../aep-process.md#70-self-declared-schema-conformance-during-alpha).
+  Runtime conformance to a profile needs a runtime suite and a conformance statement (spec 11.3).
 - The CI pass rate is not published as a badge or marketing statement.
-- AWP's implementations page keeps describing OpenAgentix as "in progress, not conformant" until
-  the statement exists.
+- AWP's implementations page uses the same wording and changes only when OpenAgentix publishes the
+  statement.
