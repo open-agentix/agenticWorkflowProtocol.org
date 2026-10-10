@@ -44,6 +44,10 @@ that no single organization holds a majority of maintainers once the specificati
 - Editorial changes (typos, wording, examples): one maintainer approval.
 - Substantive changes (new fields, changed semantics, conformance requirements): an issue first,
   at least 5 working days of public discussion, then lazy consensus of the maintainers.
+- **Alpha waiver.** While the project is in alpha and no third party depends on it, the project owner
+  may waive the 5-day discussion period for a specific change. Every waiver is recorded in the pull
+  request and in `docs/alignment/decisions.md`. A waiver never changes an AEP's lifecycle status: the
+  external review required by `docs/aep-process.md` still applies before an AEP is `Accepted`.
 - Larger changes use **AWP Enhancement Proposals (AEPs)**: a numbered Markdown document in
   `aep/` with motivation, specification text, alternatives, compatibility and conformance impact.
   The process is [docs/aep-process.md](docs/aep-process.md) with the template

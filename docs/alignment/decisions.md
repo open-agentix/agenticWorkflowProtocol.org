@@ -259,9 +259,10 @@ by an amendment to this table (an AEP that does not find a reviewer must not blo
 
 D1 and D2 change how decisions are made. The process in force when the pull request was opened
 (GOVERNANCE.md) requires at least 5 working days of public discussion for substantive changes.
-Resolution: the pull request stays open for that period (earliest merge 2026-10-17); the owner's
-decision is the maintainer consensus at its end. No AEP changes status beyond `Review` in the
-meantime.
+Resolution (updated 2026-10-10): the owner waived the 5-day period for this pull request (alpha, no
+third party depends on the schema yet; recorded under the new 'Alpha waiver' in GOVERNANCE.md). The
+pull request can therefore merge now. No AEP changes status beyond `Review` until the external
+review of the process (D16) has happened.
 
 ### C2. A larger `v1alpha2` depends on more reviews
 
