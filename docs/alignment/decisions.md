@@ -188,7 +188,7 @@ names the files changed in the same pull request.
      refused at run time with the same error; they must be republished in AWP form.
   4. No longer support window: alpha versions get none ([aep-process 6.1](../aep-process.md#61-api-versions)),
      and the project's own deployments are the only users.
-- **Consequence**: OpenAgentix issue for the importer and migration (see the pull request).
+- **Consequence**: OpenAgentix issue [#257](https://github.com/open-agentix/open-agentix/issues/257) (deprecation release, migration, removal).
 - **Applied in**: this log, `x-openagentix-extensions.md` (section 4, item 5).
 
 ### D14. Pinning by vendored copy with `PROVENANCE.json`
@@ -313,24 +313,25 @@ revision as a reason for an erratum or a new AEP, never as an automatic change.
 
 Statements are made by the OpenAgentix maintainers in the OpenAgentix repository; AWP lists them
 under the rules of [aep-process section 7](../aep-process.md#7-conformance-mark-proposal). Steps,
-each tracked as an issue with the label `awp` in OpenAgentix (numbers in the pull request):
+each tracked as an issue with the label `awp` in OpenAgentix:
 
-1. **Pin**: vendored copy of `schema/awp.v1alpha1.json` and `conformance/` with `PROVENANCE.json`;
+1. **Pin** ([#254](https://github.com/open-agentix/open-agentix/issues/254)): vendored copy of `schema/awp.v1alpha1.json` and `conformance/` with `PROVENANCE.json`;
    CI step that verifies the hashes (D14).
-2. **Exporter**: `agents.md` to effective AWP manifest (`v1alpha1`), JCS digest, `x-openagentix-*`
+2. **Exporter** ([#255](https://github.com/open-agentix/open-agentix/issues/255)): `agents.md` to effective AWP manifest (`v1alpha1`), JCS digest, `x-openagentix-*`
    extensions; manifests with critical extensions are refused until AEP-0011 is available, then
    listed in `metadata.requiredExtensions` (D3).
-3. **Import and validation**: AWP manifests (JSON or YAML) are validated against the pinned schema
+3. **Import and validation** ([#256](https://github.com/open-agentix/open-agentix/issues/256); legacy transition [#257](https://github.com/open-agentix/open-agentix/issues/257)): AWP manifests (JSON or YAML) are validated against the pinned schema
    plus the semantic rules; legacy files follow D13.
-4. **Harness**: CI job that runs the vendored AWP suite against (a) OpenAgentix's validator (all
+4. **Harness** ([#258](https://github.com/open-agentix/open-agentix/issues/258)): CI job that runs the vendored AWP suite against (a) OpenAgentix's validator (all
    suite cases, accept/reject plus path) and (b) OpenAgentix's real exports (golden examples and
    every shipped example that exports). Report as an artefact.
-5. **Statement**: when the job in step 4 passes on `main`, the OpenAgentix maintainers may publish
+5. **Statement** ([#259](https://github.com/open-agentix/open-agentix/issues/259)): when the job in step 4 passes on `main`, the OpenAgentix maintainers may publish
    "AWP `v1alpha1` schema conformant (alpha)" with suite version, scope and limitations
    ([aep-process 7.0](../aep-process.md#70-self-declared-schema-conformance-during-alpha)). Until
    then: "Built to the AWP schema, conformance in progress (alpha)."
-6. **Feature slices** per AEP (`when`, `args`, typed handoffs, `event`, `Prompt`, `Playbook`, MCP
-   catalog, `ModelCatalog`, audit retention), each first behind its `x-openagentix-*` extension,
+6. **Feature slices** per AEP: `when` [#260](https://github.com/open-agentix/open-agentix/issues/260), `args` [#261](https://github.com/open-agentix/open-agentix/issues/261), typed handoffs [#262](https://github.com/open-agentix/open-agentix/issues/262), `event`
+   [#263](https://github.com/open-agentix/open-agentix/issues/263), `Prompt` [#264](https://github.com/open-agentix/open-agentix/issues/264), `Playbook` [#265](https://github.com/open-agentix/open-agentix/issues/265), MCP catalog [#266](https://github.com/open-agentix/open-agentix/issues/266), `ModelCatalog` [#267](https://github.com/open-agentix/open-agentix/issues/267), audit
+   retention [#268](https://github.com/open-agentix/open-agentix/issues/268), each first behind its `x-openagentix-*` extension,
    then switched to the core field when the AEP is in an API version OpenAgentix pins.
 7. **Runtime conformance** (profiles `core`, `mcp`, `audit`, ...) needs a runtime test suite on the
    AWP side, which does not exist yet; schema conformance says nothing about runtime behaviour.
