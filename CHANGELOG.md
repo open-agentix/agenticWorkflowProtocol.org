@@ -14,7 +14,8 @@ API versions (`v1alpha1`, ...) are versioned separately, see [GOVERNANCE.md](GOV
 - The JSON Schema is normative for document structure; the specification text stays normative for semantics and runtime behaviour (`schema/README.md`, spec `v1alpha1` section 2, `GOVERNANCE.md`).
 - AEPs 0001-0011 moved from `Draft` to `Review` with reviewer roles and the owner's decisions; targets: 0001-0007, 0010, 0011 for `v1alpha2`, 0008 and 0009 for `v1alpha3`. AEP-0007 rewritten around Model Context Protocol terms (tool definitions and definition digests, resources, OAuth 2.1 authorization with resource indicators) within the `mcp` profile; AEP-0008 requires the `ModelCatalog` digest; AEP-0009 makes `contentRetention` mandatory with the documented default `7d`. None is accepted.
 - OpenAgentix wording on the implementations pages and README: "built to the AWP schema, conformance in progress (alpha)"; not conformant to any profile.
-
+- Docs: `GOVERNANCE.md`, `CONTRIBUTING.md` and the AEP process describe how changes are really
+  reviewed (independent review agent, no guarantee of a human read before merge).
 - Website: restyled as a documentation site (introduction page at `/`, sidebar with version label, on-this-page table of contents, prev/next links, mobile drawer, scrollable tables and code blocks); the marketing homepage was removed and its content moved into the docs pages.
 
 ### Added

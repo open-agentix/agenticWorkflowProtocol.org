@@ -123,8 +123,10 @@ Rules:
   AEP discussion when the AEP mainly benefits or burdens that implementation. Changes needed by
   OpenAgentix go through the same process as everyone else's; OpenAgentix has no veto and no
   fast track.
-- Text drafted by the project's agent account (agentix-zero) is reviewed by a human maintainer
-  before any status change, as for every other change ([GOVERNANCE.md](../GOVERNANCE.md#transparency-written-with-an-agent)).
+- Text drafted by the project's agent account (agentix-zero) is reviewed by an independent
+  review agent before merge, as for every other change, and a status change is decided by the
+  maintainers ([GOVERNANCE.md](../GOVERNANCE.md#how-changes-are-reviewed)). There is no guarantee
+  that a human reads every change.
 - In discussions, "proposed for `<version>`" means the status `Review` with that target API version.
 
 ### 5.1 Review before acceptance

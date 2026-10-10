@@ -72,6 +72,7 @@ Commit subjects and PR titles follow
 
 ## Reviews
 
-A maintainer reviews every pull request. Specification changes need at least one maintainer
-approval and should stay open for discussion for at least 5 working days if they change
-semantics.
+A maintainer reviews pull requests from people. Agent-authored pull requests are reviewed by an
+independent review agent (see [GOVERNANCE.md](GOVERNANCE.md#how-changes-are-reviewed)).
+Specification changes need at least one approval and should stay open for discussion for at
+least 5 working days if they change semantics.
